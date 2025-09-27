@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import diomaxius.whattocookwith.data.model.Ingredient
+import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
 fun IngredientCard(
