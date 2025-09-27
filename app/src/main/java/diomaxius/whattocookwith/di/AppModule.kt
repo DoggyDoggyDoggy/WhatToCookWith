@@ -7,7 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import diomaxius.whattocookwith.data.dao.IngredientDao
 import diomaxius.whattocookwith.data.database.IngredientDatabase
+import diomaxius.whattocookwith.data.repository.IngredientRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +27,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun ingredientDao(
+    fun provideIngredientDao(
         db: IngredientDatabase
     ) = db.ingredientDao()
+    
+    @Provides
+    @Singleton
+    fun provideIngredientRepository(
+        dao: IngredientDao
+    ) = IngredientRepositoryImpl(dao)
 }

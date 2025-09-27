@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.domain
+package diomaxius.whattocookwith.domain.repository
 
 import diomaxius.whattocookwith.domain.model.Ingredient
 import kotlinx.coroutines.flow.Flow
