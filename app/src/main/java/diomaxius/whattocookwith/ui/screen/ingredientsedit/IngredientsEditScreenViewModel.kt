@@ -1,13 +1,15 @@
 package diomaxius.whattocookwith.ui.screen.ingredientsedit
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.domain.usecase.DeleteIngredientFromTableUseCase
 import diomaxius.whattocookwith.domain.usecase.GetAllIngredientsFromTableUseCase
 import diomaxius.whattocookwith.domain.usecase.InsertIngredientToTableUseCase
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class IngredientsEditScreenViewModel @Inject constructor(
@@ -27,5 +29,16 @@ class IngredientsEditScreenViewModel @Inject constructor(
 
     fun onUnitChange(unit: String) {
         _unit.value = unit
+    }
+
+    fun saveIngredient() = viewModelScope.launch {
+        insertIngredientToTableUseCase(
+            Ingredient(
+                id = 0,
+                name = _ingredient.value,
+                quantity = 0,
+                unit = _unit.value
+            )
+        )
     }
 }

@@ -1,12 +1,13 @@
 package diomaxius.whattocookwith.ui.screen.ingredientsedit
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -33,11 +34,14 @@ fun IngredientsEditScreen(
     val ingredient by viewModel.ingredient.collectAsState()
     val unit by viewModel.unit.collectAsState()
 
-    Box (
+    Column (
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column {
+        Column (
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
             OutlinedTextField(
                 value = ingredient,
                 onValueChange = {
@@ -46,8 +50,6 @@ fun IngredientsEditScreen(
                 label = { Text("Ingredient") },
                 placeholder = { Text("Egg") }
             )
-
-            Spacer(modifier = Modifier.height(12.dp))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -61,11 +63,20 @@ fun IngredientsEditScreen(
 
                 UnitDropdown(
                     selectedUnit = unit,
+                    selection = listOf("pcs", "ml", "g"),
                     onUnitSelected = { unit ->
                         viewModel.onUnitChange(unit)
                     }
                 )
             }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = { viewModel.saveIngredient() }
+        ) {
+            Text(text = "Save")
         }
     }
 }
@@ -74,9 +85,9 @@ fun IngredientsEditScreen(
 @Composable
 fun UnitDropdown(
     selectedUnit: String,
+    selection: List<String>,
     onUnitSelected: (String) -> Unit
 ) {
-    val units = listOf("pcs", "g", "ml")
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -100,7 +111,7 @@ fun UnitDropdown(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            units.forEach { unit ->
+            selection.forEach { unit ->
                 DropdownMenuItem(
                     text = { Text(unit) },
                     onClick = {
