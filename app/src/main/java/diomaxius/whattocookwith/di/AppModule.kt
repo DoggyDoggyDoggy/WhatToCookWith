@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import diomaxius.whattocookwith.data.dao.IngredientDao
 import diomaxius.whattocookwith.data.database.IngredientDatabase
 import diomaxius.whattocookwith.data.repository.IngredientRepositoryImpl
+import diomaxius.whattocookwith.domain.repository.IngredientRepository
 import javax.inject.Singleton
 
 @Module
@@ -35,5 +36,5 @@ object AppModule {
     @Singleton
     fun provideIngredientRepository(
         dao: IngredientDao
-    ) = IngredientRepositoryImpl(dao)
+    ) : IngredientRepository = IngredientRepositoryImpl(dao)
 }
