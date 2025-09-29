@@ -11,6 +11,7 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 class IngredientsEditScreenViewModel @Inject constructor(
     private val insertIngredientToTableUseCase: InsertIngredientToTableUseCase,
     getAllIngredientsFromTableUseCase: GetAllIngredientsFromTableUseCase,
-    private val deleteIngredientFromTableUseCase: DeleteIngredientFromTableUseCase
+    private val deleteIngredientFromTableUseCase: DeleteIngredientFromTableUseCase,
 ) : ViewModel() {
 
     val ingredients: StateFlow<List<Ingredient>> = getAllIngredientsFromTableUseCase().stateIn(
@@ -28,10 +29,10 @@ class IngredientsEditScreenViewModel @Inject constructor(
     )
 
     private val _ingredient = MutableStateFlow<String>("")
-    val ingredient = _ingredient
+    val ingredient: StateFlow<String> = _ingredient.asStateFlow()
 
     private val _unit = MutableStateFlow<String>("")
-    val unit = _unit
+    val unit: StateFlow<String> = _unit.asStateFlow()
 
     fun onIngredientChange(ingredient: String) {
         _ingredient.value = ingredient
