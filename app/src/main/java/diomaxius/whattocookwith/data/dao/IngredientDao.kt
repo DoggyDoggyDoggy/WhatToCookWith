@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface IngredientDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertIngredient(ingredient: IngredientEntity)
 
     @Query("SELECT * FROM IngredientEntity ORDER BY name ASC")
