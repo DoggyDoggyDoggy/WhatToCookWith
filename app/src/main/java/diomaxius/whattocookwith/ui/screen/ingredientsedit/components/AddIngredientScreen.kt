@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.ingredientsedit
+package diomaxius.whattocookwith.ui.screen.ingredientsedit.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.ui.components.DropdownMenu
 
 @Composable
-fun IngredientEditScreen(
+fun AddIngredientScreen(
     ingredient: String,
     unit: String,
     ingredientEmptyTextField: Boolean,
