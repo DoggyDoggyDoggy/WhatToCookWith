@@ -34,7 +34,6 @@ class IngredientsEditScreenViewModel @Inject constructor(
     fun saveIngredient() = viewModelScope.launch {
         insertIngredientToTableUseCase(
             Ingredient(
-                id = 0,
                 name = _ingredient.value,
                 quantity = 0,
                 unit = _unit.value
