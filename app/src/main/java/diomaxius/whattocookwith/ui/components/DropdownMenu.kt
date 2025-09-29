@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.dp
 fun DropdownMenu(
     selected: String,
     selection: List<String>,
-    onUnitSelected: (String) -> Unit
+    onUnitSelected: (String) -> Unit,
+    isError: Boolean,
+    toggleErrorFalse: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -37,6 +39,7 @@ fun DropdownMenu(
                     enabled = true
                 ),
             value = selected,
+            isError = isError,
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) }
@@ -51,6 +54,7 @@ fun DropdownMenu(
                     text = { Text(unit) },
                     onClick = {
                         onUnitSelected(unit)
+                        toggleErrorFalse()
                         expanded = false
                     }
                 )
