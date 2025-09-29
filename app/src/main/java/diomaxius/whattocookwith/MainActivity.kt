@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
-import diomaxius.whattocookwith.ui.screen.ingredientsedit.IngredientsEditScreen
+import diomaxius.whattocookwith.ui.screen.ingredientsedit.IngredientsScreen
 import diomaxius.whattocookwith.ui.theme.WhatToCookWithTheme
 
 @AndroidEntryPoint
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             WhatToCookWithTheme {
-                IngredientsEditScreen()
+                IngredientsScreen()
             }
         }
     }
