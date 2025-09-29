@@ -22,9 +22,31 @@ fun AddIngredientDialog(
     var ingredientEmptyTextField by remember { mutableStateOf(false) }
     var unitEmptyTextField by remember { mutableStateOf(false) }
 
+    val resetAndClose = {
+        onIngredientChange("")
+        onUnitChange("")
+        ingredientEmptyTextField = false
+        unitEmptyTextField = false
+        closeDialog()
+    }
+
+    val saveAndClose = {
+        if (ingredient != "" && unit != "") {
+            saveIngredient()
+            onIngredientChange("")
+            onUnitChange("")
+            closeDialog()
+        }
+        else {
+            if (ingredient == "") ingredientEmptyTextField = true
+            if (unit == "") unitEmptyTextField = true
+        }
+    }
+
     AlertDialog(
-        icon = {},
-        title = {},
+        title = {
+            Text(text = "Add ingredient")
+        },
         text = {
             AddIngredientScreen(
                 ingredient = ingredient,
@@ -37,41 +59,17 @@ fun AddIngredientDialog(
                 unitEmptyTextFieldSetFalse = { unitEmptyTextField = false }
             )
         },
-        onDismissRequest = {
-            onIngredientChange("")
-            onUnitChange("")
-            ingredientEmptyTextField = false
-            unitEmptyTextField = false
-            closeDialog()
-        },
+        onDismissRequest = resetAndClose,
         confirmButton = {
             Button(
-                onClick = {
-                    if (ingredient != "" && unit != "") {
-                        saveIngredient()
-                        onIngredientChange("")
-                        onUnitChange("")
-                        closeDialog()
-                    }
-                    else {
-                        if (ingredient == "") ingredientEmptyTextField = true
-                        if (unit == "") unitEmptyTextField = true
-                    }
-                }
-
+                onClick = saveAndClose
             ) {
                 Text(text = "Save")
             }
         },
         dismissButton = {
             TextButton(
-                onClick = {
-                    onIngredientChange("")
-                    onUnitChange("")
-                    ingredientEmptyTextField = false
-                    unitEmptyTextField = false
-                    closeDialog()
-                }
+                onClick = resetAndClose
             ) {
                 Text("Close")
             }
