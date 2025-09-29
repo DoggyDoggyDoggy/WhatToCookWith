@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.domain.model.Ingredient
@@ -26,7 +27,7 @@ fun IngredientCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(4.dp)
     ) {
         Row(
             modifier = Modifier
@@ -42,7 +43,7 @@ fun IngredientCard(
                 text = ingredient.name,
                 fontSize = 20.sp
             )
-
+        /*
             Spacer(
                 modifier = Modifier.weight(1f)
             )
@@ -73,7 +74,19 @@ fun IngredientCard(
 
             Spacer(
                 modifier = Modifier.width(6.dp)
-            )
+            )*/
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun IngredientCardPreview() {
+    IngredientCard(
+        ingredient = Ingredient(
+            name = "Egg",
+            quantity = 1,
+            unit = "pcs"
+        )
+    )
 }
