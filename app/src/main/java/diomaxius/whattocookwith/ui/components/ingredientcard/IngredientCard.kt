@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.components
+package diomaxius.whattocookwith.ui.components.ingredientcard
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +24,8 @@ import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
 fun IngredientCard(
-    ingredient: Ingredient
+    ingredient: Ingredient,
+    ingredientCardMode: IngredientCardMode
 ) {
     Card(
         modifier = Modifier
@@ -43,38 +46,49 @@ fun IngredientCard(
                 text = ingredient.name,
                 fontSize = 20.sp
             )
-        /*
+
             Spacer(
                 modifier = Modifier.weight(1f)
             )
 
-            Icon(
-                modifier = Modifier.size(32.dp),
-                imageVector = Icons.Default.Remove,
-                contentDescription = null
-            )
+            if (ingredientCardMode is IngredientCardMode.IngredientList) {
+                Icon(
+                    modifier = Modifier.size(42.dp),
+                    imageVector = Icons.Default.Delete,
+                    tint = Color(0xFFE36363),
+                    contentDescription = "Delete ingredient"
+                )
+            } else if (
+                ingredientCardMode is IngredientCardMode.PantryList
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    imageVector = Icons.Default.Remove,
+                    contentDescription = null
+                )
+
+                Spacer(
+                    modifier = Modifier.width(6.dp)
+                )
+
+                Text(
+                    text = ingredient.quantity.toString()
+                )
+
+                Spacer(
+                    modifier = Modifier.width(6.dp)
+                )
+
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null
+                )
+            }
 
             Spacer(
                 modifier = Modifier.width(6.dp)
             )
-
-            Text(
-                text = ingredient.quantity.toString()
-            )
-
-            Spacer(
-                modifier = Modifier.width(6.dp)
-            )
-
-            Icon(
-                modifier = Modifier.size(32.dp),
-                imageVector = Icons.Default.Add,
-                contentDescription = null
-            )
-
-            Spacer(
-                modifier = Modifier.width(6.dp)
-            )*/
         }
     }
 }
@@ -87,6 +101,7 @@ fun IngredientCardPreview() {
             name = "Egg",
             quantity = 1,
             unit = "pcs"
-        )
+        ),
+        ingredientCardMode = IngredientCardMode.IngredientList
     )
 }

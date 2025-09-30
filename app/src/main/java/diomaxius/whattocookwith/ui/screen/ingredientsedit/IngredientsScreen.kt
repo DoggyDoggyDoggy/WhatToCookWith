@@ -18,7 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import diomaxius.whattocookwith.domain.model.Ingredient
-import diomaxius.whattocookwith.ui.components.IngredientCard
+import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
+import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCardMode
 import diomaxius.whattocookwith.ui.screen.ingredientsedit.components.AddIngredientDialog
 
 @Composable
@@ -74,7 +75,8 @@ fun Content(
     ) {
         items(ingredients) {
             IngredientCard(
-                ingredient = it
+                ingredient = it,
+                ingredientCardMode = IngredientCardMode.IngredientList
             )
         }
     }
