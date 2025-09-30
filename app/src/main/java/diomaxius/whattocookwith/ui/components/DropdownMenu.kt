@@ -6,7 +6,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +25,7 @@ fun DropdownMenu(
     selection: List<String>,
     onUnitSelected: (String) -> Unit,
     isError: Boolean,
-    toggleErrorFalse: () -> Unit
+    toggleErrorFalse: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -32,6 +34,11 @@ fun DropdownMenu(
         onExpandedChange = { expanded = it }
     ) {
         OutlinedTextField(
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                errorContainerColor = MaterialTheme.colorScheme.surface
+            ),
             modifier = Modifier
                 .width(100.dp)
                 .menuAnchor(
@@ -46,6 +53,7 @@ fun DropdownMenu(
         )
 
         ExposedDropdownMenu(
+            containerColor = MaterialTheme.colorScheme.surface,
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
