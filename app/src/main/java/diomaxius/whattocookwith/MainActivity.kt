@@ -3,6 +3,7 @@ package diomaxius.whattocookwith
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import diomaxius.whattocookwith.ui.screen.ingredientsedit.IngredientsScreen
 import diomaxius.whattocookwith.ui.theme.WhatToCookWithTheme
@@ -11,7 +12,7 @@ import diomaxius.whattocookwith.ui.theme.WhatToCookWithTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //enableEdgeToEdge()
+        enableEdgeToEdge()
         setContent {
             WhatToCookWithTheme {
                 IngredientsScreen()
