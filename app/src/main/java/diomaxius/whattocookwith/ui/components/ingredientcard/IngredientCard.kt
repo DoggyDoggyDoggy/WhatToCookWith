@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.domain.model.Ingredient
@@ -30,7 +29,7 @@ import diomaxius.whattocookwith.domain.model.Ingredient
 fun IngredientCard(
     ingredient: Ingredient,
     ingredientCardMode: IngredientCardMode,
-    deleteIngredient: (Ingredient) -> Unit
+    deleteIngredient: (Ingredient) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -65,10 +64,9 @@ fun IngredientCard(
                 Icon(
                     modifier = Modifier
                         .size(42.dp)
-                        .clickable{
+                        .clickable {
                             deleteIngredient(ingredient)
-                        }
-                    ,
+                        },
                     imageVector = Icons.Default.Delete,
                     tint = Color(0xFFE36363),
                     contentDescription = "Delete ingredient"
@@ -108,18 +106,4 @@ fun IngredientCard(
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun IngredientCardPreview() {
-    IngredientCard(
-        ingredient = Ingredient(
-            name = "Egg",
-            quantity = 1,
-            unit = "pcs"
-        ),
-        ingredientCardMode = IngredientCardMode.IngredientList,
-        deleteIngredient = {}
-    )
 }
