@@ -53,7 +53,8 @@ fun IngredientsScreen(
             closeDialog = { openDialog = false },
             onIngredientChange = viewModel::onIngredientChange,
             onUnitChange = viewModel::onUnitChange,
-            saveIngredient = viewModel::saveIngredient
+            saveIngredient = viewModel::saveIngredient,
+            deleteIngredient = viewModel::deleteIngredient
         )
     }
 }
@@ -69,6 +70,7 @@ fun Content(
     onIngredientChange: (String) -> Unit,
     onUnitChange: (String) -> Unit,
     saveIngredient: () -> Unit,
+    deleteIngredient: (Ingredient) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -76,7 +78,8 @@ fun Content(
         items(ingredients) {
             IngredientCard(
                 ingredient = it,
-                ingredientCardMode = IngredientCardMode.PantryList
+                ingredientCardMode = IngredientCardMode.IngredientList,
+                deleteIngredient = deleteIngredient
             )
         }
     }

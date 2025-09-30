@@ -1,5 +1,6 @@
 package diomaxius.whattocookwith.ui.components.ingredientcard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +27,8 @@ import diomaxius.whattocookwith.domain.model.Ingredient
 @Composable
 fun IngredientCard(
     ingredient: Ingredient,
-    ingredientCardMode: IngredientCardMode
+    ingredientCardMode: IngredientCardMode,
+    deleteIngredient: (Ingredient) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -54,7 +56,12 @@ fun IngredientCard(
 
             if (ingredientCardMode is IngredientCardMode.IngredientList) {
                 Icon(
-                    modifier = Modifier.size(42.dp),
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clickable{
+                            deleteIngredient(ingredient)
+                        }
+                    ,
                     imageVector = Icons.Default.Delete,
                     tint = Color(0xFFE36363),
                     contentDescription = "Delete ingredient"
@@ -105,6 +112,7 @@ fun IngredientCardPreview() {
             quantity = 1,
             unit = "pcs"
         ),
-        ingredientCardMode = IngredientCardMode.IngredientList
+        ingredientCardMode = IngredientCardMode.IngredientList,
+        deleteIngredient = {}
     )
 }

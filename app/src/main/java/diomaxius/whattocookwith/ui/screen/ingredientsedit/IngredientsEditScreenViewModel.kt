@@ -51,4 +51,8 @@ class IngredientsEditScreenViewModel @Inject constructor(
             )
         )
     }
+
+    fun deleteIngredient(ingredient: Ingredient) = viewModelScope.launch {
+        deleteIngredientFromTableUseCase(ingredient)
+    }
 }
