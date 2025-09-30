@@ -76,7 +76,7 @@ fun Content(
         items(ingredients) {
             IngredientCard(
                 ingredient = it,
-                ingredientCardMode = IngredientCardMode.IngredientList
+                ingredientCardMode = IngredientCardMode.PantryList
             )
         }
     }

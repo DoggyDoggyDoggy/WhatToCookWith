@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +63,7 @@ fun IngredientCard(
                 ingredientCardMode is IngredientCardMode.PantryList
             ) {
                 Icon(
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(42.dp),
                     imageVector = Icons.Default.Remove,
                     contentDescription = null
                 )
@@ -72,7 +73,9 @@ fun IngredientCard(
                 )
 
                 Text(
-                    text = ingredient.quantity.toString()
+                    text = ingredient.quantity.toString(),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium
                 )
 
                 Spacer(
@@ -80,7 +83,7 @@ fun IngredientCard(
                 )
 
                 Icon(
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(42.dp),
                     imageVector = Icons.Default.Add,
                     contentDescription = null
                 )
