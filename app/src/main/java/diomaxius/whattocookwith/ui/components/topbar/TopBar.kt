@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -15,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBar(
     text: String,
-    onClick: () -> Unit,
+    navigationButton: @Composable () -> Unit
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -39,16 +39,7 @@ fun TopBar(
             )
         },
         navigationIcon = {
-            IconButton(
-                onClick = onClick
-            ) {
-                Icon(
-                    modifier = Modifier.size(32.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.White
-                )
-            }
+            navigationButton()
         },
         actions = {
             // dummy to center text
@@ -62,4 +53,36 @@ fun TopBar(
             containerColor = MaterialTheme.colorScheme.primary
         )
     )
+}
+
+@Composable
+fun PopBackArrowButton(
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
+            modifier = Modifier.size(32.dp),
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = "Back",
+            tint = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+@Composable
+fun MenuButton(
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
+            modifier = Modifier.size(32.dp),
+            imageVector = Icons.Filled.Menu,
+            contentDescription = "Menu",
+            tint = MaterialTheme.colorScheme.onPrimary
+        )
+    }
 }

@@ -23,8 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCardMode
+import diomaxius.whattocookwith.ui.components.topbar.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.topbar.TopBar
 import diomaxius.whattocookwith.ui.screen.ingredientsedit.components.AddIngredientDialog
 
@@ -38,11 +40,17 @@ fun IngredientsScreen(
 
     var openDialog by remember { mutableStateOf(false) }
 
+    val navHostController = LocalNavController.current
+
     Scaffold(
         topBar = {
             TopBar(
                 text = "All ingredients available",
-                onClick = { }
+                navigationButton = {
+                    PopBackArrowButton{
+                        navHostController.popBackStack()
+                    }
+                }
             )
         },
         floatingActionButton = {
