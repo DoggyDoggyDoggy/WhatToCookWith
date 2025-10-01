@@ -1,7 +1,8 @@
-package diomaxius.whattocookwith.ui.components.ingredientcard
+package diomaxius.whattocookwith.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,8 +29,7 @@ import diomaxius.whattocookwith.domain.model.Ingredient
 @Composable
 fun IngredientCard(
     ingredient: Ingredient,
-    ingredientCardMode: IngredientCardMode,
-    deleteIngredient: (Ingredient) -> Unit,
+    actions: @Composable RowScope.(Ingredient) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -60,50 +60,58 @@ fun IngredientCard(
                 modifier = Modifier.weight(1f)
             )
 
-            if (ingredientCardMode is IngredientCardMode.IngredientList) {
-                Icon(
-                    modifier = Modifier
-                        .size(42.dp)
-                        .clickable {
-                            deleteIngredient(ingredient)
-                        },
-                    imageVector = Icons.Default.Delete,
-                    tint = Color(0xFFE36363),
-                    contentDescription = "Delete ingredient"
-                )
-            } else if (
-                ingredientCardMode is IngredientCardMode.PantryList
-            ) {
-                Icon(
-                    modifier = Modifier.size(42.dp),
-                    imageVector = Icons.Default.Remove,
-                    contentDescription = null
-                )
-
-                Spacer(
-                    modifier = Modifier.width(6.dp)
-                )
-
-                Text(
-                    text = ingredient.quantity.toString(),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium
-                )
-
-                Spacer(
-                    modifier = Modifier.width(6.dp)
-                )
-
-                Icon(
-                    modifier = Modifier.size(42.dp),
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-            }
+            actions(ingredient)
 
             Spacer(
                 modifier = Modifier.width(6.dp)
             )
         }
     }
+}
+
+@Composable
+fun IngredientList(
+    deleteIngredient: () -> Unit
+) {
+    Icon(
+        modifier = Modifier
+            .size(42.dp)
+            .clickable {
+                deleteIngredient()
+            },
+        imageVector = Icons.Default.Delete,
+        tint = Color(0xFFE36363),
+        contentDescription = "Delete ingredient"
+    )
+}
+
+@Composable
+fun PantryList(
+    ingredient: String
+) {
+    Icon(
+        modifier = Modifier.size(42.dp),
+        imageVector = Icons.Default.Remove,
+        contentDescription = null
+    )
+
+    Spacer(
+        modifier = Modifier.width(6.dp)
+    )
+
+    Text(
+        text = ingredient,
+        fontSize = 22.sp,
+        fontWeight = FontWeight.Medium
+    )
+
+    Spacer(
+        modifier = Modifier.width(6.dp)
+    )
+
+    Icon(
+        modifier = Modifier.size(42.dp),
+        imageVector = Icons.Default.Add,
+        contentDescription = null
+    )
 }

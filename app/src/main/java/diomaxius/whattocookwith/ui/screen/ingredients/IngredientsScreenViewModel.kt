@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.ingredientsedit
+package diomaxius.whattocookwith.ui.screen.ingredients
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class IngredientsEditScreenViewModel @Inject constructor(
+class IngredientsScreenViewModel @Inject constructor(
     private val insertIngredientToTableUseCase: InsertIngredientToTableUseCase,
     getAllIngredientsFromTableUseCase: GetAllIngredientsFromTableUseCase,
     private val deleteIngredientFromTableUseCase: DeleteIngredientFromTableUseCase,

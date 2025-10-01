@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import diomaxius.whattocookwith.ui.screen.ingredientsedit.IngredientsScreen
+import diomaxius.whattocookwith.ui.screen.ingredients.IngredientsScreen
 import diomaxius.whattocookwith.ui.screen.home.HomeScreen
 
 val LocalNavController = compositionLocalOf<NavHostController> {
@@ -26,7 +26,7 @@ fun AppNavigation(
             composable(NavScreen.Home.route) {
                 HomeScreen()
             }
-            composable(NavScreen.IngredientsEdit.route) {
+            composable(NavScreen.Ingredients.route) {
                 IngredientsScreen()
             }
         }

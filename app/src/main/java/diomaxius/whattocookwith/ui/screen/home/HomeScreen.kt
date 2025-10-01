@@ -4,8 +4,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import diomaxius.whattocookwith.ui.components.topbar.MenuButton
-import diomaxius.whattocookwith.ui.components.topbar.TopBar
+import diomaxius.whattocookwith.ui.components.MenuButton
+import diomaxius.whattocookwith.ui.components.TopBar
+import diomaxius.whattocookwith.ui.screen.pantry.PantryScreen
 
 @Composable
 fun HomeScreen() {
@@ -27,5 +28,5 @@ fun HomeScreen() {
 
 @Composable
 fun Content(modifier: Modifier = Modifier) {
-
+    PantryScreen(modifier = modifier)
 }

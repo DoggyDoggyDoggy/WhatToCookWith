@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.components.topbar
+package diomaxius.whattocookwith.ui.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

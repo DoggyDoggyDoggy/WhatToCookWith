@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.ingredientsedit.components
+package diomaxius.whattocookwith.ui.screen.ingredients.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

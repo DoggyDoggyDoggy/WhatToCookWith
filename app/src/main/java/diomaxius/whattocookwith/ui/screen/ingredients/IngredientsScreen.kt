@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.ingredientsedit
+package diomaxius.whattocookwith.ui.screen.ingredients
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,15 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.navigation.LocalNavController
-import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
-import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCardMode
-import diomaxius.whattocookwith.ui.components.topbar.PopBackArrowButton
-import diomaxius.whattocookwith.ui.components.topbar.TopBar
-import diomaxius.whattocookwith.ui.screen.ingredientsedit.components.AddIngredientDialog
+import diomaxius.whattocookwith.ui.components.IngredientCard
+import diomaxius.whattocookwith.ui.components.IngredientList
+import diomaxius.whattocookwith.ui.components.PopBackArrowButton
+import diomaxius.whattocookwith.ui.components.TopBar
+import diomaxius.whattocookwith.ui.screen.ingredients.components.AddIngredientDialog
 
 @Composable
 fun IngredientsScreen(
-    viewModel: IngredientsEditScreenViewModel = hiltViewModel(),
+    viewModel: IngredientsScreenViewModel = hiltViewModel(),
 ) {
     val ingredients by viewModel.ingredients.collectAsState()
     val ingredient by viewModel.ingredient.collectAsState()
@@ -104,11 +104,14 @@ fun Content(
                     modifier = Modifier.height(8.dp)
                 )
             }
-            items(ingredients) {
+            items(ingredients) { ingredient->
                 IngredientCard(
-                    ingredient = it,
-                    ingredientCardMode = IngredientCardMode.IngredientList,
-                    deleteIngredient = deleteIngredient
+                    ingredient = ingredient,
+                    actions = {
+                        IngredientList(
+                            deleteIngredient = { deleteIngredient(ingredient) }
+                        )
+                    }
                 )
             }
         }
