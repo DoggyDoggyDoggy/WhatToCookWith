@@ -22,4 +22,7 @@ class IngredientRepositoryImpl @Inject constructor(
 
     override suspend fun deleteIngredient(ingredient: Ingredient) =
         ingredientDao.deleteById(ingredient.toEntity())
+
+    override suspend fun editIngredient(ingredient: Ingredient) =
+        ingredientDao.editIngredient(ingredient.toEntity())
 }

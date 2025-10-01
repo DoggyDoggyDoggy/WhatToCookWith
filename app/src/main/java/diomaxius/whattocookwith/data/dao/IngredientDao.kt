@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import diomaxius.whattocookwith.data.model.IngredientEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,7 @@ interface IngredientDao {
 
     @Delete
     suspend fun deleteById(ingredient: IngredientEntity)
+
+    @Update
+    suspend fun editIngredient(ingredient: IngredientEntity)
 }
