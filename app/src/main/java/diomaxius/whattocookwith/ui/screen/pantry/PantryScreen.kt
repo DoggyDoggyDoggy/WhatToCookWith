@@ -41,6 +41,7 @@ fun PantryScreen(
                         PantryList(
                             ingredient = it,
                             increaseQuantity = viewModel::increaseIngredientQuantity,
+                            decreaseQuantity = viewModel::decreaseIngredientQuantity
                         )
                     }
                 )

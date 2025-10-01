@@ -71,7 +71,7 @@ fun IngredientCard(
 
 @Composable
 fun IngredientList(
-    deleteIngredient: () -> Unit
+    deleteIngredient: () -> Unit,
 ) {
     Icon(
         modifier = Modifier
@@ -88,10 +88,15 @@ fun IngredientList(
 @Composable
 fun PantryList(
     ingredient: Ingredient,
-    increaseQuantity: (Ingredient) -> Unit
+    increaseQuantity: (Ingredient) -> Unit,
+    decreaseQuantity: (Ingredient) -> Unit,
 ) {
     Icon(
-        modifier = Modifier.size(42.dp),
+        modifier = Modifier
+            .size(42.dp)
+            .clickable {
+                decreaseQuantity(ingredient)
+            },
         imageVector = Icons.Default.Remove,
         contentDescription = null
     )
@@ -113,10 +118,9 @@ fun PantryList(
     Icon(
         modifier = Modifier
             .size(42.dp)
-            .clickable{
+            .clickable {
                 increaseQuantity(ingredient)
-            }
-        ,
+            },
         imageVector = Icons.Default.Add,
         contentDescription = null
     )
