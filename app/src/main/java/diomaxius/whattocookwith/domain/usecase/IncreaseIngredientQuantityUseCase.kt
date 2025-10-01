@@ -4,7 +4,7 @@ import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.domain.repository.IngredientRepository
 import javax.inject.Inject
 
-class IncreaseQuantityIngredientUseCase @Inject constructor(
+class IncreaseIngredientQuantityUseCase @Inject constructor(
     private val ingredientRepository: IngredientRepository
 ) {
     suspend operator fun invoke(ingredient: Ingredient) =
