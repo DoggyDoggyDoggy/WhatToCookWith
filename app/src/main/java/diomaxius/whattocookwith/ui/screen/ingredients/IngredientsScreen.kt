@@ -109,7 +109,7 @@ fun Content(
                     ingredient = ingredient,
                     actions = {
                         IngredientList(
-                            deleteIngredient = { deleteIngredient(ingredient) }
+                            deleteIngredient = { deleteIngredient(it) }
                         )
                     }
                 )

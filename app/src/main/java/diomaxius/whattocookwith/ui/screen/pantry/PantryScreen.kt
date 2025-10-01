@@ -38,7 +38,10 @@ fun PantryScreen(
                 IngredientCard(
                     ingredient = ingredient,
                     actions = {
-                        PantryList(ingredient.quantity.toString())
+                        PantryList(
+                            ingredient = it,
+                            increaseQuantity = viewModel::increaseIngredientQuantity,
+                        )
                     }
                 )
             }

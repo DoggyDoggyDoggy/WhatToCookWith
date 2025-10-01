@@ -87,7 +87,8 @@ fun IngredientList(
 
 @Composable
 fun PantryList(
-    ingredient: String
+    ingredient: Ingredient,
+    increaseQuantity: (Ingredient) -> Unit
 ) {
     Icon(
         modifier = Modifier.size(42.dp),
@@ -100,7 +101,7 @@ fun PantryList(
     )
 
     Text(
-        text = ingredient,
+        text = ingredient.quantity.toString(),
         fontSize = 22.sp,
         fontWeight = FontWeight.Medium
     )
@@ -110,7 +111,12 @@ fun PantryList(
     )
 
     Icon(
-        modifier = Modifier.size(42.dp),
+        modifier = Modifier
+            .size(42.dp)
+            .clickable{
+                increaseQuantity(ingredient)
+            }
+        ,
         imageVector = Icons.Default.Add,
         contentDescription = null
     )
