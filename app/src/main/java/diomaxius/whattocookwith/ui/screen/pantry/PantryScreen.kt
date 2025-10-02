@@ -17,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import diomaxius.whattocookwith.ui.components.ingredientcard.EditablePantry
-import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCardForPantry
-import diomaxius.whattocookwith.ui.components.ingredientcard.Pantry
+import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.EditablePantry
+import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.IngredientCardForPantry
+import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.Pantry
 
 @Composable
 fun PantryScreen(

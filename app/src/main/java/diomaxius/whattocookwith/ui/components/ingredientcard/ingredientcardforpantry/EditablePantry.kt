@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.components.ingredientcard
+package diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer

@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.components.ingredientcard
+package diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.combinedClickable
@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 
 @Composable
 fun IngredientCardForPantry(

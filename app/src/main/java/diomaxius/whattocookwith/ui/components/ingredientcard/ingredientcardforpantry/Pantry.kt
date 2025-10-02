@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.components.ingredientcard
+package diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
