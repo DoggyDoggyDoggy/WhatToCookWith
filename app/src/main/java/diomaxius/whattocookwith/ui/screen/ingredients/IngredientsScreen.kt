@@ -28,7 +28,7 @@ import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 import diomaxius.whattocookwith.ui.components.ingredientcard.EditableIngredient
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
-import diomaxius.whattocookwith.ui.components.ingredientdialog.IngredientDialog
+import diomaxius.whattocookwith.ui.components.ingredientdialog.CreateIngredientDialog
 
 @Composable
 fun IngredientsScreen(
@@ -79,7 +79,7 @@ fun Content(
     ingredients: List<Ingredient>,
     showAddDialog: Boolean,
     closeDialog: () -> Unit,
-    saveIngredient: () -> Unit,
+    saveIngredient: (Ingredient) -> Unit,
     deleteIngredient: (Ingredient) -> Unit,
     editIngredient: (Ingredient, Ingredient) -> Unit,
 ) {
@@ -110,10 +110,10 @@ fun Content(
     }
 
     if (showAddDialog) {
-        //IngredientDialog(
-        //    ingredient = Ingredient("", 0, ""),
-        //    closeDialog = closeDialog,
-        //    saveIngredient = saveIngredient
-        //)
+        CreateIngredientDialog(
+            dialogTitle = "Add ingredient",
+            closeDialog = closeDialog,
+            saveIngredient = saveIngredient
+        )
     }
 }

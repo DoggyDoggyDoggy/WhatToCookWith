@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
-import diomaxius.whattocookwith.ui.components.ingredientdialog.IngredientDialog
+import diomaxius.whattocookwith.ui.components.ingredientdialog.EditIngredientDialog
 
 @Composable
 fun EditableIngredient(
@@ -47,7 +47,8 @@ fun EditableIngredient(
     )
 
     if (showEditDialog) {
-        IngredientDialog(
+        EditIngredientDialog(
+            dialogTitle = "Edit ingredient",
             ingredient = ingredient,
             closeDialog = { showEditDialog = false },
             saveIngredient = editIngredient

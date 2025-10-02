@@ -22,10 +22,41 @@ import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
-fun IngredientDialog(
+fun CreateIngredientDialog(
+    dialogTitle: String,
+    ingredient: Ingredient = Ingredient("", 0, ""),
+    closeDialog: () -> Unit,
+    saveIngredient: (Ingredient) -> Unit
+) {
+    IngredientDialog(
+        dialogTitle = dialogTitle,
+        ingredient = ingredient,
+        closeDialog = closeDialog,
+        saveIngredient = { _, new -> saveIngredient(new) }
+    )
+}
+
+@Composable
+fun EditIngredientDialog(
+    dialogTitle: String,
     ingredient: Ingredient,
     closeDialog: () -> Unit,
-    saveIngredient: (Ingredient, Ingredient) -> Unit,
+    saveIngredient: (old: Ingredient, new: Ingredient) -> Unit
+) {
+    IngredientDialog(
+        dialogTitle = dialogTitle,
+        ingredient = ingredient,
+        closeDialog = closeDialog,
+        saveIngredient = saveIngredient
+    )
+}
+
+@Composable
+private fun IngredientDialog(
+    dialogTitle: String,
+    ingredient: Ingredient,
+    closeDialog: () -> Unit,
+    saveIngredient: (old: Ingredient, new: Ingredient) -> Unit,
 ) {
     var ingredientEmptyTextField by remember { mutableStateOf(false) }
     var unitEmptyTextField by remember { mutableStateOf(false) }
@@ -55,7 +86,7 @@ fun IngredientDialog(
             Column {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Add ingredient",
+                    text = dialogTitle,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     fontWeight = FontWeight.Medium
