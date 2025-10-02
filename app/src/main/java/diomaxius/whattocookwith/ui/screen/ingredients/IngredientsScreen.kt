@@ -28,13 +28,14 @@ import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 import diomaxius.whattocookwith.ui.components.ingredientcard.EditableIngredient
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
+import diomaxius.whattocookwith.ui.components.ingredientdialog.IngredientDialog
 
 @Composable
 fun IngredientsScreen(
     viewModel: IngredientsScreenViewModel = hiltViewModel(),
 ) {
     val ingredients by viewModel.ingredients.collectAsState()
-    var openDialog by remember { mutableStateOf(false) }
+    var showAddDialog by remember { mutableStateOf(false) }
     val navHostController = LocalNavController.current
 
     Scaffold(
@@ -50,7 +51,7 @@ fun IngredientsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { openDialog = true },
+                onClick = { showAddDialog = true },
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer
             ) {
                 Icon(
@@ -63,8 +64,8 @@ fun IngredientsScreen(
         Content(
             modifier = Modifier.padding(innerPadding),
             ingredients = ingredients,
-            openDialog = openDialog,
-            closeDialog = { openDialog = false },
+            showAddDialog = showAddDialog,
+            closeDialog = { showAddDialog = false },
             saveIngredient = viewModel::saveIngredient,
             deleteIngredient = viewModel::deleteIngredient,
             editIngredient = viewModel::editIngredient
@@ -76,7 +77,7 @@ fun IngredientsScreen(
 fun Content(
     modifier: Modifier,
     ingredients: List<Ingredient>,
-    openDialog: Boolean,
+    showAddDialog: Boolean,
     closeDialog: () -> Unit,
     saveIngredient: () -> Unit,
     deleteIngredient: (Ingredient) -> Unit,
@@ -108,14 +109,11 @@ fun Content(
         }
     }
 
-    //if (openDialog) {
-    //    IngredientDialog(
-    //        ingredient = ingredient,
-    //        unit = unit,
-    //        closeDialog = closeDialog,
-    //        onIngredientChange = onIngredientChange,
-    //        onUnitChange = onUnitChange,
-    //        saveIngredient = saveIngredient
-    //    )
-    //}
+    if (showAddDialog) {
+        //IngredientDialog(
+        //    ingredient = Ingredient("", 0, ""),
+        //    closeDialog = closeDialog,
+        //    saveIngredient = saveIngredient
+        //)
+    }
 }

@@ -23,13 +23,13 @@ fun EditableIngredient(
     deleteIngredient: (Ingredient) -> Unit,
     editIngredient: (Ingredient, Ingredient) -> Unit
 ) {
-    var showEditDialogAlert by remember { mutableStateOf(false) }
+    var showEditDialog by remember { mutableStateOf(false) }
 
     Icon(
         modifier = Modifier
             .size(42.dp)
             .clickable {
-                showEditDialogAlert = true
+                showEditDialog = true
             },
         imageVector = Icons.Default.Edit,
         contentDescription = "Edit ingredient"
@@ -46,10 +46,10 @@ fun EditableIngredient(
         contentDescription = "Delete ingredient"
     )
 
-    if (showEditDialogAlert) {
+    if (showEditDialog) {
         IngredientDialog(
             ingredient = ingredient,
-            closeDialog = { showEditDialogAlert = false },
+            closeDialog = { showEditDialog = false },
             saveIngredient = editIngredient
         )
     }
