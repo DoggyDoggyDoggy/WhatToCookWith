@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.domain.usecase.DeleteIngredientFromTableUseCase
+import diomaxius.whattocookwith.domain.usecase.EditIngredientUseCase
 import diomaxius.whattocookwith.domain.usecase.GetAllIngredientsFromTableUseCase
 import diomaxius.whattocookwith.domain.usecase.InsertIngredientToTableUseCase
 import jakarta.inject.Inject
@@ -17,9 +18,10 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class IngredientsScreenViewModel @Inject constructor(
-    private val insertIngredientToTableUseCase: InsertIngredientToTableUseCase,
     getAllIngredientsFromTableUseCase: GetAllIngredientsFromTableUseCase,
+    private val insertIngredientToTableUseCase: InsertIngredientToTableUseCase,
     private val deleteIngredientFromTableUseCase: DeleteIngredientFromTableUseCase,
+    private val editIngredientUseCase: EditIngredientUseCase
 ) : ViewModel() {
 
     val ingredients: StateFlow<List<Ingredient>> = getAllIngredientsFromTableUseCase().stateIn(
@@ -54,5 +56,9 @@ class IngredientsScreenViewModel @Inject constructor(
 
     fun deleteIngredient(ingredient: Ingredient) = viewModelScope.launch {
         deleteIngredientFromTableUseCase(ingredient)
+    }
+
+    fun editIngredient(ingredient: Ingredient) = viewModelScope.launch {
+        editIngredientUseCase(ingredient)
     }
 }

@@ -75,7 +75,8 @@ fun IngredientsScreen(
             onIngredientChange = viewModel::onIngredientChange,
             onUnitChange = viewModel::onUnitChange,
             saveIngredient = viewModel::saveIngredient,
-            deleteIngredient = viewModel::deleteIngredient
+            deleteIngredient = viewModel::deleteIngredient,
+            editIngredient = viewModel::editIngredient
         )
     }
 }
@@ -92,6 +93,7 @@ fun Content(
     onUnitChange: (String) -> Unit,
     saveIngredient: () -> Unit,
     deleteIngredient: (Ingredient) -> Unit,
+    editIngredient: (Ingredient) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -109,7 +111,8 @@ fun Content(
                     ingredient = ingredient,
                     actions = {
                         EditableIngredient(
-                            deleteIngredient = { deleteIngredient(it) }
+                            deleteIngredient = { deleteIngredient(it) },
+                            editIngredient = { editIngredient(it) }
                         )
                     }
                 )
