@@ -1,8 +1,7 @@
 package diomaxius.whattocookwith.ui.screen.ingredients
 
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
@@ -97,14 +97,14 @@ fun Content(
         color = MaterialTheme.colorScheme.surface
     ) {
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(horizontal = 8.dp)
+                .padding(top = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-            }
-            items(ingredients) { ingredient->
+            items(ingredients, key = { it.name }) { ingredient->
                 IngredientCard(
                     ingredient = ingredient,
                     actions = {

@@ -19,14 +19,12 @@ import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
 fun IngredientCard(
+    modifier: Modifier = Modifier,
     ingredient: Ingredient,
     actions: @Composable RowScope.(Ingredient) -> Unit,
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp)
-            .padding(bottom = 8.dp),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
