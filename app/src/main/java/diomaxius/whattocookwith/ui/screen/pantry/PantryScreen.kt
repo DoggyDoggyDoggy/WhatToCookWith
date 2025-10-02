@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
-import diomaxius.whattocookwith.ui.components.ingredientcard.PantryList
+import diomaxius.whattocookwith.ui.components.ingredientcard.EditablePantry
 
 @Composable
 fun PantryScreen(
@@ -38,7 +38,7 @@ fun PantryScreen(
                 IngredientCard(
                     ingredient = ingredient,
                     actions = {
-                        PantryList(
+                        EditablePantry(
                             ingredient = it,
                             increaseQuantity = viewModel::increaseIngredientQuantity,
                             decreaseQuantity = viewModel::decreaseIngredientQuantity

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
-fun PantryList(
+fun EditablePantry(
     ingredient: Ingredient,
     increaseQuantity: (Ingredient) -> Unit,
     decreaseQuantity: (Ingredient) -> Unit,

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
-import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientList
+import diomaxius.whattocookwith.ui.components.ingredientcard.EditableIngredient
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.screen.ingredients.components.AddIngredientDialog
@@ -108,7 +108,7 @@ fun Content(
                 IngredientCard(
                     ingredient = ingredient,
                     actions = {
-                        IngredientList(
+                        EditableIngredient(
                             deleteIngredient = { deleteIngredient(it) }
                         )
                     }
