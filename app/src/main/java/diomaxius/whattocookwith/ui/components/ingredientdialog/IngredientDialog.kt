@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -31,8 +30,8 @@ fun IngredientDialog(
     var ingredientEmptyTextField by remember { mutableStateOf(false) }
     var unitEmptyTextField by remember { mutableStateOf(false) }
 
-    var name by rememberSaveable { mutableStateOf(ingredient.name) }
-    var unit by rememberSaveable { mutableStateOf(ingredient.unit) }
+    var name by remember { mutableStateOf(ingredient.name) }
+    var unit by remember { mutableStateOf(ingredient.unit) }
 
     val resetAndClose = {
         ingredientEmptyTextField = false
