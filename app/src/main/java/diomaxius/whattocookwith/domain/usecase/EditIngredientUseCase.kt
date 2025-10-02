@@ -5,8 +5,8 @@ import diomaxius.whattocookwith.domain.repository.IngredientRepository
 import javax.inject.Inject
 
 class EditIngredientUseCase @Inject constructor(
-    private val ingredientRepository: IngredientRepository,
+    private val repository: IngredientRepository,
 ) {
-    suspend operator fun invoke(ingredient: Ingredient) =
-        ingredientRepository.editIngredient(ingredient)
+    suspend operator fun invoke(oldIngredient: Ingredient, newIngredient: Ingredient) =
+        repository.editIngredient(oldIngredient, newIngredient)
 }

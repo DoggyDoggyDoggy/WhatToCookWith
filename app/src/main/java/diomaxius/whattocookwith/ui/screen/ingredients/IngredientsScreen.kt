@@ -28,18 +28,13 @@ import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 import diomaxius.whattocookwith.ui.components.ingredientcard.EditableIngredient
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
-import diomaxius.whattocookwith.ui.screen.ingredients.components.AddIngredientDialog
 
 @Composable
 fun IngredientsScreen(
     viewModel: IngredientsScreenViewModel = hiltViewModel(),
 ) {
     val ingredients by viewModel.ingredients.collectAsState()
-    val ingredient by viewModel.ingredient.collectAsState()
-    val unit by viewModel.unit.collectAsState()
-
     var openDialog by remember { mutableStateOf(false) }
-
     val navHostController = LocalNavController.current
 
     Scaffold(
@@ -47,7 +42,7 @@ fun IngredientsScreen(
             TopBar(
                 text = "All ingredients available",
                 navigationButton = {
-                    PopBackArrowButton{
+                    PopBackArrowButton {
                         navHostController.popBackStack()
                     }
                 }
@@ -68,12 +63,8 @@ fun IngredientsScreen(
         Content(
             modifier = Modifier.padding(innerPadding),
             ingredients = ingredients,
-            ingredient = ingredient,
-            unit = unit,
             openDialog = openDialog,
             closeDialog = { openDialog = false },
-            onIngredientChange = viewModel::onIngredientChange,
-            onUnitChange = viewModel::onUnitChange,
             saveIngredient = viewModel::saveIngredient,
             deleteIngredient = viewModel::deleteIngredient,
             editIngredient = viewModel::editIngredient
@@ -85,15 +76,11 @@ fun IngredientsScreen(
 fun Content(
     modifier: Modifier,
     ingredients: List<Ingredient>,
-    ingredient: String,
-    unit: String,
     openDialog: Boolean,
     closeDialog: () -> Unit,
-    onIngredientChange: (String) -> Unit,
-    onUnitChange: (String) -> Unit,
     saveIngredient: () -> Unit,
     deleteIngredient: (Ingredient) -> Unit,
-    editIngredient: (Ingredient) -> Unit,
+    editIngredient: (Ingredient, Ingredient) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -106,13 +93,13 @@ fun Content(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(ingredients, key = { it.name }) { ingredient->
+            items(ingredients, key = { it.name }) { ingredient ->
                 IngredientCard(
                     ingredient = ingredient,
                     actions = {
                         EditableIngredient(
                             ingredient = it,
-                            deleteIngredient =  deleteIngredient,
+                            deleteIngredient = deleteIngredient,
                             editIngredient = editIngredient,
                         )
                     }
@@ -121,14 +108,14 @@ fun Content(
         }
     }
 
-    if (openDialog) {
-        AddIngredientDialog(
-            ingredient = ingredient,
-            unit = unit,
-            closeDialog = closeDialog,
-            onIngredientChange = onIngredientChange,
-            onUnitChange = onUnitChange,
-            saveIngredient = saveIngredient
-        )
-    }
+    //if (openDialog) {
+    //    IngredientDialog(
+    //        ingredient = ingredient,
+    //        unit = unit,
+    //        closeDialog = closeDialog,
+    //        onIngredientChange = onIngredientChange,
+    //        onUnitChange = onUnitChange,
+    //        saveIngredient = saveIngredient
+    //    )
+    //}
 }

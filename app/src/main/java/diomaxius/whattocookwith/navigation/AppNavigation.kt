@@ -21,7 +21,7 @@ fun AppNavigation(
     CompositionLocalProvider(LocalNavController provides navHostController) {
         NavHost(
             navController = navHostController,
-            startDestination = NavScreen.Home.route
+            startDestination = NavScreen.Ingredients.route
         ) {
             composable(NavScreen.Home.route) {
                 HomeScreen()

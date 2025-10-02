@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.ingredients.components
+package diomaxius.whattocookwith.ui.components.ingredientdialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,40 +14,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
-fun AddIngredientDialog(
-    ingredient: String,
-    unit: String,
+fun IngredientDialog(
+    ingredient: Ingredient,
     closeDialog: () -> Unit,
-    onIngredientChange: (String) -> Unit,
-    onUnitChange: (String) -> Unit,
-    saveIngredient: () -> Unit,
+    saveIngredient: (Ingredient, Ingredient) -> Unit,
 ) {
     var ingredientEmptyTextField by remember { mutableStateOf(false) }
     var unitEmptyTextField by remember { mutableStateOf(false) }
 
+    var name by rememberSaveable { mutableStateOf(ingredient.name) }
+    var unit by rememberSaveable { mutableStateOf(ingredient.unit) }
+
     val resetAndClose = {
-        onIngredientChange("")
-        onUnitChange("")
         ingredientEmptyTextField = false
         unitEmptyTextField = false
         closeDialog()
     }
 
     val saveAndClose = {
-        if (ingredient != "" && unit != "") {
-            saveIngredient()
-            onIngredientChange("")
-            onUnitChange("")
+        if (name != "" && unit != "") {
+            saveIngredient(ingredient, ingredient.copy(name = name, unit = unit))
             closeDialog()
         } else {
-            if (ingredient == "") ingredientEmptyTextField = true
+            if (name == "") ingredientEmptyTextField = true
             if (unit == "") unitEmptyTextField = true
         }
     }
@@ -73,12 +71,12 @@ fun AddIngredientDialog(
         },
         text = {
             AddIngredientScreen(
-                ingredient = ingredient,
+                ingredient = name,
                 unit = unit,
                 ingredientEmptyTextField = ingredientEmptyTextField,
                 unitEmptyTextField = unitEmptyTextField,
-                onIngredientChange = onIngredientChange,
-                onUnitChange = onUnitChange,
+                onIngredientChange = { name = it },
+                onUnitChange = { unit = it },
                 ingredientEmptyTextFieldSetFalse = { ingredientEmptyTextField = false },
                 unitEmptyTextFieldSetFalse = { unitEmptyTextField = false }
             )

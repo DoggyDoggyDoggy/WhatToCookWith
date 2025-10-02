@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.ingredients.components
+package diomaxius.whattocookwith.ui.components.ingredientdialog
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

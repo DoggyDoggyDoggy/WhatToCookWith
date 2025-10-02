@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class IngredientRepositoryImpl @Inject constructor(
-    private val ingredientDao: IngredientDao
-): IngredientRepository {
+    private val ingredientDao: IngredientDao,
+) : IngredientRepository {
     override suspend fun insertIngredient(ingredient: Ingredient) =
         ingredientDao.insertIngredient(ingredient.toEntity())
 
@@ -25,4 +25,8 @@ class IngredientRepositoryImpl @Inject constructor(
 
     override suspend fun editIngredient(ingredient: Ingredient) =
         ingredientDao.editIngredient(ingredient.toEntity())
+
+
+    override suspend fun editIngredient(oldIngredient: Ingredient, newIngredient: Ingredient) =
+        ingredientDao.editIngredient(oldIngredient.toEntity(), newIngredient.toEntity())
 }
