@@ -111,8 +111,9 @@ fun Content(
                     ingredient = ingredient,
                     actions = {
                         EditableIngredient(
-                            deleteIngredient = { deleteIngredient(it) },
-                            editIngredient = { editIngredient(it) }
+                            ingredient = it,
+                            deleteIngredient =  deleteIngredient,
+                            editIngredient = editIngredient,
                         )
                     }
                 )

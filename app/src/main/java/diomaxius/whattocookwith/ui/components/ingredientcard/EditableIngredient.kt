@@ -10,11 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import diomaxius.whattocookwith.domain.model.Ingredient
 
 @Composable
 fun EditableIngredient(
-    deleteIngredient: () -> Unit,
-    editIngredient: () -> Unit,
+    ingredient: Ingredient,
+    deleteIngredient: (Ingredient) -> Unit,
+    editIngredient: (Ingredient) -> Unit,
 ) {
     Icon(
         modifier = Modifier
@@ -30,7 +32,7 @@ fun EditableIngredient(
         modifier = Modifier
             .size(42.dp)
             .clickable {
-                deleteIngredient()
+                deleteIngredient(ingredient)
             },
         imageVector = Icons.Default.Delete,
         tint = Color(0xFFE36363),
