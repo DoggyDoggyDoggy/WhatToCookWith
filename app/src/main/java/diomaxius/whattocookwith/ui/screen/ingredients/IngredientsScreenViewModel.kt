@@ -1,6 +1,5 @@
 package diomaxius.whattocookwith.ui.screen.ingredients
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,14 +29,8 @@ class IngredientsScreenViewModel @Inject constructor(
     )
 
 
-    fun saveIngredient() = viewModelScope.launch {
-        insertIngredientToTableUseCase(
-            Ingredient(
-                name = "",
-                quantity = 0,
-                unit = ""
-            )
-        )
+    fun saveIngredient(ingredient: Ingredient) = viewModelScope.launch {
+        insertIngredientToTableUseCase(ingredient)
     }
 
     fun deleteIngredient(ingredient: Ingredient) = viewModelScope.launch {
@@ -46,7 +39,6 @@ class IngredientsScreenViewModel @Inject constructor(
 
     fun editIngredient(oldIngredient: Ingredient, newIngredient: Ingredient) =
         viewModelScope.launch {
-            Log.i("IngredientsScreenViewModel", "editIngredient: $newIngredient")
             editIngredientUseCase(oldIngredient, newIngredient)
         }
 }
