@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,17 +18,49 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.navigation.LocalNavController
+import diomaxius.whattocookwith.ui.components.PopBackArrowButton
+import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.EditablePantry
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.IngredientCardForPantry
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.Pantry
 
 @Composable
 fun PantryScreen(
-    modifier: Modifier,
     viewModel: PantryScreenViewModel = hiltViewModel(),
 ) {
     val pantry by viewModel.ingredients.collectAsState()
+    val navHostController = LocalNavController.current
 
+    Scaffold(
+        topBar = {
+            TopBar(
+                text = "What to cook with",
+                navigationButton = {
+                    PopBackArrowButton {
+                        navHostController.popBackStack()
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        Content(
+            modifier = Modifier.padding(innerPadding),
+            pantry = pantry,
+            increaseIngredientQuantity = viewModel::increaseIngredientQuantity,
+            decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity
+        )
+    }
+}
+
+@Composable
+fun Content(
+    modifier: Modifier,
+    pantry: List<Ingredient>,
+    increaseIngredientQuantity: (Ingredient) -> Unit,
+    decreaseIngredientQuantity: (Ingredient) -> Unit,
+) {
     Surface(
         color = MaterialTheme.colorScheme.surface
     ) {
@@ -63,8 +96,8 @@ fun PantryScreen(
                     ) {
                         EditablePantry(
                             ingredient = it,
-                            increaseQuantity = viewModel::increaseIngredientQuantity,
-                            decreaseQuantity = viewModel::decreaseIngredientQuantity
+                            increaseQuantity = increaseIngredientQuantity,
+                            decreaseQuantity = decreaseIngredientQuantity
                         )
                     }
                 }

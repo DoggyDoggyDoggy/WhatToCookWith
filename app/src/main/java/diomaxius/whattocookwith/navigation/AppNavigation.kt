@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import diomaxius.whattocookwith.ui.screen.ingredients.IngredientsScreen
 import diomaxius.whattocookwith.ui.screen.home.HomeScreen
+import diomaxius.whattocookwith.ui.screen.pantry.PantryScreen
 
 val LocalNavController = compositionLocalOf<NavHostController> {
     error("NavController not initialized")
@@ -21,13 +22,16 @@ fun AppNavigation(
     CompositionLocalProvider(LocalNavController provides navHostController) {
         NavHost(
             navController = navHostController,
-            startDestination = NavScreen.Ingredients.route
+            startDestination = NavScreen.Home.route
         ) {
             composable(NavScreen.Home.route) {
                 HomeScreen()
             }
             composable(NavScreen.Ingredients.route) {
                 IngredientsScreen()
+            }
+            composable(NavScreen.Pantry.route) {
+                PantryScreen()
             }
         }
     }
