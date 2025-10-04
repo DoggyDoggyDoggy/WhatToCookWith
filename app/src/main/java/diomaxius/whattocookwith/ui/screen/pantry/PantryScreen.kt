@@ -1,11 +1,13 @@
 package diomaxius.whattocookwith.ui.screen.pantry
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -31,6 +33,8 @@ fun PantryScreen(
     viewModel: PantryScreenViewModel = hiltViewModel(),
 ) {
     val pantry by viewModel.ingredients.collectAsState()
+    val query by viewModel.query.collectAsState()
+
     val navHostController = LocalNavController.current
 
     Scaffold(
@@ -48,8 +52,10 @@ fun PantryScreen(
         Content(
             modifier = Modifier.padding(innerPadding),
             pantry = pantry,
+            query = query,
             increaseIngredientQuantity = viewModel::increaseIngredientQuantity,
-            decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity
+            decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity,
+            setQuery = viewModel::setQuery
         )
     }
 }
@@ -58,47 +64,57 @@ fun PantryScreen(
 fun Content(
     modifier: Modifier,
     pantry: List<Ingredient>,
+    query: String,
     increaseIngredientQuantity: (Ingredient) -> Unit,
     decreaseIngredientQuantity: (Ingredient) -> Unit,
+    setQuery: (String) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
     ) {
-        LazyColumn(
+        Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(horizontal = 8.dp)
                 .padding(top = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(pantry, key = { it.name }) { ingredient ->
-                var editablePantry by rememberSaveable { mutableStateOf(false) }
+            OutlinedTextField(
+                value = query,
+                onValueChange = {setQuery(it)},
+            )
 
-                if (!editablePantry) {
-                    IngredientCardForPantry(
-                        ingredient = ingredient,
-                        onLongClick = {
-                            editablePantry = !editablePantry
-                        }
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(pantry, key = { it.name }) { ingredient ->
+                    var editablePantry by rememberSaveable { mutableStateOf(false) }
 
-                    ) {
-                        Pantry(
-                            ingredient = it
-                        )
-                    }
-                } else {
-                    IngredientCardForPantry(
-                        ingredient = ingredient,
-                        onLongClick = {
-                            editablePantry = !editablePantry
+                    if (!editablePantry) {
+                        IngredientCardForPantry(
+                            ingredient = ingredient,
+                            onLongClick = {
+                                editablePantry = !editablePantry
+                            }
+
+                        ) {
+                            Pantry(
+                                ingredient = it
+                            )
                         }
-                    ) {
-                        EditablePantry(
-                            ingredient = it,
-                            increaseQuantity = increaseIngredientQuantity,
-                            decreaseQuantity = decreaseIngredientQuantity
-                        )
+                    } else {
+                        IngredientCardForPantry(
+                            ingredient = ingredient,
+                            onLongClick = {
+                                editablePantry = !editablePantry
+                            }
+                        ) {
+                            EditablePantry(
+                                ingredient = it,
+                                increaseQuantity = increaseIngredientQuantity,
+                                decreaseQuantity = decreaseIngredientQuantity
+                            )
+                        }
                     }
                 }
             }
