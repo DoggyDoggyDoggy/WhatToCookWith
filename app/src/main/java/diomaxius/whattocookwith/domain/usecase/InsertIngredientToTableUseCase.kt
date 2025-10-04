@@ -8,5 +8,5 @@ class InsertIngredientToTableUseCase @Inject constructor(
     private val repository: IngredientRepository
 ) {
     suspend operator fun invoke(ingredient: Ingredient) =
-        repository.insertIngredient(ingredient)
+        repository.insertIngredient(ingredient.copy(name = ingredient.name.trim()))
 }

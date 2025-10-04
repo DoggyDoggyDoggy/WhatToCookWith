@@ -8,5 +8,8 @@ class EditIngredientUseCase @Inject constructor(
     private val repository: IngredientRepository,
 ) {
     suspend operator fun invoke(oldIngredient: Ingredient, newIngredient: Ingredient) =
-        repository.editIngredient(oldIngredient, newIngredient)
+        repository.editIngredient(
+            oldIngredient.copy(name = oldIngredient.name.trim()),
+            newIngredient.copy(name = newIngredient.name.trim())
+        )
 }
