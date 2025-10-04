@@ -18,6 +18,9 @@ interface IngredientDao {
     @Query("SELECT * FROM IngredientEntity ORDER BY name ASC")
     fun getIngredients(): Flow<List<IngredientEntity>>
 
+    @Query("SELECT * FROM IngredientEntity WHERE name LIKE :pattern COLLATE NOCASE ORDER BY name ASC")
+    fun searchByName(pattern: String): Flow<List<IngredientEntity>>
+
     @Delete
     suspend fun deleteById(ingredient: IngredientEntity)
 

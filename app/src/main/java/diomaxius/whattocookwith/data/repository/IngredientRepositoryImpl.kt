@@ -20,12 +20,16 @@ class IngredientRepositoryImpl @Inject constructor(
             ingredients.map { it.toDomain() }
         }
 
+    override fun searchByName(pattern: String): Flow<List<Ingredient>> =
+        ingredientDao.searchByName(pattern).map { ingredients ->
+            ingredients.map { it.toDomain() }
+        }
+
     override suspend fun deleteIngredient(ingredient: Ingredient) =
         ingredientDao.deleteById(ingredient.toEntity())
 
     override suspend fun editIngredient(ingredient: Ingredient) =
         ingredientDao.editIngredient(ingredient.toEntity())
-
 
     override suspend fun editIngredient(oldIngredient: Ingredient, newIngredient: Ingredient) =
         ingredientDao.editIngredient(oldIngredient.toEntity(), newIngredient.toEntity())
