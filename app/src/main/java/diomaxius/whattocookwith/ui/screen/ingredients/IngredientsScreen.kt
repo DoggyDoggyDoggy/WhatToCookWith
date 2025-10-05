@@ -1,10 +1,9 @@
 package diomaxius.whattocookwith.ui.screen.ingredients
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
@@ -103,26 +103,16 @@ fun Content(
     Surface(
         color = MaterialTheme.colorScheme.surface
     ) {
-        Column (
+        Box(
             modifier = modifier
                 .fillMaxSize()
                 .padding(horizontal = 8.dp)
-                .padding(top = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(top = 8.dp)
         ) {
-            SearchOutlinedTextField(
-                query = query,
-                onQueryChange = setQuery,
-                focusManager = focusManager,
-                shape = RoundedCornerShape(16.dp)
-            )
-
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(top = (56 + 8).dp)
             ) {
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
                 items(ingredients, key = { it.name }) { ingredient ->
                     IngredientCard(
                         ingredient = ingredient,
@@ -136,6 +126,16 @@ fun Content(
                     )
                 }
             }
+
+            SearchOutlinedTextField(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .zIndex(1f),
+                query = query,
+                onQueryChange = setQuery,
+                focusManager = focusManager,
+                shape = RoundedCornerShape(16.dp)
+            )
         }
     }
 
