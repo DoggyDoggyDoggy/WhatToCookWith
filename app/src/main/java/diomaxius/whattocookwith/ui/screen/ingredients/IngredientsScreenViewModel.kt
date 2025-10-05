@@ -9,8 +9,12 @@ import diomaxius.whattocookwith.domain.usecase.EditIngredientUseCase
 import diomaxius.whattocookwith.domain.usecase.GetAllIngredientsFromTableUseCase
 import diomaxius.whattocookwith.domain.usecase.InsertIngredientToTableUseCase
 import jakarta.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -21,13 +25,18 @@ class IngredientsScreenViewModel @Inject constructor(
     private val deleteIngredientFromTableUseCase: DeleteIngredientFromTableUseCase,
     private val editIngredientUseCase: EditIngredientUseCase,
 ) : ViewModel() {
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query
 
-    val ingredients: StateFlow<List<Ingredient>> = getAllIngredientsFromTableUseCase().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
+    val ingredients: StateFlow<List<Ingredient>> = _query
+        .debounce(300)
+        .distinctUntilChanged()
+        .flatMapLatest { q ->
+            getAllIngredientsFromTableUseCase(q)
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    fun setQuery(q: String) { _query.value = q }
 
     fun saveIngredient(ingredient: Ingredient) = viewModelScope.launch {
         insertIngredientToTableUseCase(ingredient)

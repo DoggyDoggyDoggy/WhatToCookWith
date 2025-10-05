@@ -1,10 +1,12 @@
 package diomaxius.whattocookwith.ui.screen.ingredients
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -21,12 +23,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 import diomaxius.whattocookwith.ui.components.ingredientcard.EditableIngredient
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
+import diomaxius.whattocookwith.ui.components.SearchOutlinedTextField
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.ingredientdialog.CreateIngredientDialog
 
@@ -35,8 +40,12 @@ fun IngredientsScreen(
     viewModel: IngredientsScreenViewModel = hiltViewModel(),
 ) {
     val ingredients by viewModel.ingredients.collectAsState()
+    val query by viewModel.query.collectAsState()
+
     var showAddDialog by remember { mutableStateOf(false) }
+
     val navHostController = LocalNavController.current
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
@@ -64,11 +73,14 @@ fun IngredientsScreen(
         Content(
             modifier = Modifier.padding(innerPadding),
             ingredients = ingredients,
+            query = query,
             showAddDialog = showAddDialog,
             closeDialog = { showAddDialog = false },
             saveIngredient = viewModel::saveIngredient,
             deleteIngredient = viewModel::deleteIngredient,
-            editIngredient = viewModel::editIngredient
+            editIngredient = viewModel::editIngredient,
+            focusManager = focusManager,
+            setQuery = viewModel::setQuery,
         )
     }
 }
@@ -82,29 +94,43 @@ fun Content(
     saveIngredient: (Ingredient) -> Unit,
     deleteIngredient: (Ingredient) -> Unit,
     editIngredient: (Ingredient, Ingredient) -> Unit,
+    focusManager: FocusManager,
+    query: String,
+    setQuery: (String) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
     ) {
-        LazyColumn(
+        Column (
             modifier = modifier
                 .fillMaxSize()
                 .padding(horizontal = 8.dp)
                 .padding(top = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(ingredients, key = { it.name }) { ingredient ->
-                IngredientCard(
-                    ingredient = ingredient,
-                    actions = {
-                        EditableIngredient(
-                            ingredient = it,
-                            deleteIngredient = deleteIngredient,
-                            editIngredient = editIngredient,
-                        )
-                    }
-                )
+            SearchOutlinedTextField(
+                query = query,
+                onQueryChange = setQuery,
+                focusManager = focusManager,
+                shape = RoundedCornerShape(16.dp)
+            )
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(ingredients, key = { it.name }) { ingredient ->
+                    IngredientCard(
+                        ingredient = ingredient,
+                        actions = {
+                            EditableIngredient(
+                                ingredient = it,
+                                deleteIngredient = deleteIngredient,
+                                editIngredient = editIngredient,
+                            )
+                        }
+                    )
+                }
             }
         }
     }
