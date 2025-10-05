@@ -2,7 +2,9 @@ package diomaxius.whattocookwith.ui.screen.ingredients
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -106,8 +108,7 @@ fun Content(
                 .fillMaxSize()
                 .padding(horizontal = 8.dp)
                 .padding(top = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SearchOutlinedTextField(
                 query = query,
@@ -119,6 +120,9 @@ fun Content(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                item {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
                 items(ingredients, key = { it.name }) { ingredient ->
                     IngredientCard(
                         ingredient = ingredient,

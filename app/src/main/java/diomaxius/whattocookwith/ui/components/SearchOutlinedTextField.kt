@@ -27,8 +27,7 @@ fun SearchOutlinedTextField(
     shape: Shape = OutlinedTextFieldDefaults.shape,
 ) {
     OutlinedTextField(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = query,
         onValueChange = { onQueryChange(it) },
         singleLine = true,
