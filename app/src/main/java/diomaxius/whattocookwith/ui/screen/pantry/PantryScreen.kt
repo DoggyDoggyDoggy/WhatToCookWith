@@ -48,9 +48,7 @@ fun PantryScreen(
             TopBar(
                 text = "What to cook with",
                 navigationButton = {
-                    PopBackArrowButton {
-                        navHostController.popBackStack()
-                    }
+                    PopBackArrowButton(navHostController)
                 }
             )
         }

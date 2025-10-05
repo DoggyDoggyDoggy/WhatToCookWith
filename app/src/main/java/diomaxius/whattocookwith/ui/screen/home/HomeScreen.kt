@@ -33,14 +33,18 @@ fun Content(
     ) {
         Button(
             onClick = {
-                navHostController.navigate(NavScreen.Ingredients.route)
+                navHostController.navigate(NavScreen.Ingredients.route) {
+                    launchSingleTop = true
+                }
             }
         ) {
             Text("Go to ingredients")
         }
         Button(
             onClick = {
-                navHostController.navigate(NavScreen.Pantry.route)
+                navHostController.navigate(NavScreen.Pantry.route) {
+                    launchSingleTop = true
+                }
             }
         ) {
             Text("Go to pantry")

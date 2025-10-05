@@ -54,9 +54,7 @@ fun IngredientsScreen(
             TopBar(
                 text = "All ingredients available",
                 navigationButton = {
-                    PopBackArrowButton {
-                        navHostController.popBackStack()
-                    }
+                    PopBackArrowButton(navHostController)
                 }
             )
         },
