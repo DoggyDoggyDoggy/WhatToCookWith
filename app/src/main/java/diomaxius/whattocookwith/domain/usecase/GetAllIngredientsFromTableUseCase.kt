@@ -10,5 +10,5 @@ class GetAllIngredientsFromTableUseCase @Inject constructor(
 ) {
     operator fun invoke(query: String = ""): Flow<List<Ingredient>> =
         if (query.trim().isEmpty()) repository.getIngredients()
-        else repository.searchByName("$query%")
+        else repository.searchByName("%$query%")
 }
