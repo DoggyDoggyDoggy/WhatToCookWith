@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -18,11 +18,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
+import diomaxius.whattocookwith.ui.components.SearchOutlinedTextField
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.EditablePantry
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.IngredientCardForPantry
@@ -36,6 +39,7 @@ fun PantryScreen(
     val query by viewModel.query.collectAsState()
 
     val navHostController = LocalNavController.current
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
@@ -55,7 +59,8 @@ fun PantryScreen(
             query = query,
             increaseIngredientQuantity = viewModel::increaseIngredientQuantity,
             decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity,
-            setQuery = viewModel::setQuery
+            setQuery = viewModel::setQuery,
+            focusManager = focusManager
         )
     }
 }
@@ -68,6 +73,7 @@ fun Content(
     increaseIngredientQuantity: (Ingredient) -> Unit,
     decreaseIngredientQuantity: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
+    focusManager: FocusManager
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -77,11 +83,14 @@ fun Content(
                 .fillMaxSize()
                 .padding(horizontal = 8.dp)
                 .padding(top = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            OutlinedTextField(
-                value = query,
-                onValueChange = {setQuery(it)},
+            SearchOutlinedTextField(
+                query = query,
+                onQueryChange = setQuery,
+                focusManager = focusManager,
+                shape = RoundedCornerShape(32.dp)
             )
 
             LazyColumn(
