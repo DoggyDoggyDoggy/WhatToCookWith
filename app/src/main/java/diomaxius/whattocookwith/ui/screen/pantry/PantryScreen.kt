@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -43,6 +42,11 @@ import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpa
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.IngredientCardForPantry
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.Pantry
 
+enum class ScreenState(val title: String) {
+    PANTRY("My pantry"),
+    INGREDIENTS("All ingredients")
+}
+
 @Composable
 fun PantryScreen(
     viewModel: PantryScreenViewModel = hiltViewModel(),
@@ -53,67 +57,22 @@ fun PantryScreen(
     val navHostController = LocalNavController.current
     val focusManager = LocalFocusManager.current
 
-    var state by rememberSaveable { mutableIntStateOf(0) }
-    val titles = listOf("My pantry", "All ingredients")
+    var state by rememberSaveable { mutableStateOf(ScreenState.PANTRY) }
 
     Scaffold(
         topBar = {
             TopBar(
-                text = "What to cook with",
+                text = if (state == ScreenState.PANTRY) "My pantry" else "All ingredients",
                 navigationButton = {
                     PopBackArrowButton(navHostController)
                 }
             )
         },
         bottomBar = {
-            SecondaryTabRow(
-                modifier = Modifier.navigationBarsPadding(),
-                selectedTabIndex = state,
-                indicator = {
-                    Box(
-                        modifier = Modifier
-                            .tabIndicatorOffset(state)
-                            .padding(horizontal = 12.dp)
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(32.dp))
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.tertiaryContainer)
-                        )
-                    }
-                },
-                divider = {}
-            ) {
-                titles.forEachIndexed { index, title ->
-                    val tabModifier = if (state == index) {
-                        Modifier.zIndex(1f)
-                            .padding(horizontal = 12.dp)
-                            .clip(RoundedCornerShape(32.dp))
-                    } else {
-                        Modifier.zIndex(1f)
-                            .padding(horizontal = 12.dp)
-                            .border(
-                                width = 1.dp,
-                                color = MaterialTheme.colorScheme.tertiary,
-                                shape = RoundedCornerShape(32.dp)
-                            )
-                    }
-                    Tab(
-                        modifier = tabModifier,
-                        selected = state == index,
-                        onClick = { state = index },
-                        text = {
-                            Text(
-                                text = title,
-                                color = if (state == index) MaterialTheme.colorScheme.onTertiaryContainer
-                                else MaterialTheme.colorScheme.tertiary
-                            )
-                        }
-                    )
-                }
-            }
+            PantryBottomBar(
+                state = state,
+                setState = { state = it }
+            )
         }
     ) { innerPadding ->
         Content(
@@ -192,6 +151,67 @@ fun Content(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun PantryBottomBar(
+    state: ScreenState,
+    setState: (ScreenState) -> Unit,
+) {
+    val screens = ScreenState.entries.toTypedArray()
+    val selectedIndex = state.ordinal
+
+    SecondaryTabRow(
+        modifier = Modifier.navigationBarsPadding(),
+        selectedTabIndex = selectedIndex,
+        indicator = {
+            Box(
+                modifier = Modifier
+                    .tabIndicatorOffset(selectedIndex)
+                    .padding(horizontal = 12.dp)
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(32.dp))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.tertiaryContainer)
+                )
+            }
+        },
+        divider = {}
+    ) {
+        screens.forEachIndexed { index, screen ->
+            val selected = selectedIndex == index
+            val tabModifier = if (selected) {
+                Modifier
+                    .zIndex(1f)
+                    .padding(horizontal = 12.dp)
+                    .clip(RoundedCornerShape(32.dp))
+            } else {
+                Modifier
+                    .zIndex(1f)
+                    .padding(horizontal = 12.dp)
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        shape = RoundedCornerShape(32.dp)
+                    )
+            }
+            Tab(
+                modifier = tabModifier,
+                selected = selected,
+                onClick = { setState(screen) },
+                text = {
+                    Text(
+                        text = screen.title,
+                        color = if (selected) MaterialTheme.colorScheme.onTertiaryContainer
+                        else MaterialTheme.colorScheme.tertiary
+                    )
+                }
+            )
         }
     }
 }
