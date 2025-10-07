@@ -73,7 +73,8 @@ fun PantryScreen(
             increaseIngredientQuantity = viewModel::increaseIngredientQuantity,
             decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity,
             setQuery = viewModel::setQuery,
-            focusManager = focusManager
+            focusManager = focusManager,
+            state = state
         )
     }
 }
@@ -87,6 +88,7 @@ fun Content(
     decreaseIngredientQuantity: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
     focusManager: FocusManager,
+    state: ScreenState
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -111,7 +113,10 @@ fun Content(
                 item {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
-                items(pantry, key = { it.name }) { ingredient ->
+                items(
+                    pantry.filter { if (state == ScreenState.PANTRY) it.quantity >= 0 else it.quantity > 0 },
+                    key = { it.name }
+                ) { ingredient ->
                     var editablePantry by rememberSaveable { mutableStateOf(false) }
 
                     if (!editablePantry) {
@@ -140,6 +145,7 @@ fun Content(
                             )
                         }
                     }
+
                 }
             }
         }
