@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetAllIngredientsFromTableUseCase @Inject constructor(
     private val repository: IngredientRepository,
 ) {
-    operator fun invoke(query: String = ""): Flow<List<Ingredient>> =
-        if (query.trim().isEmpty()) repository.getIngredients()
-        else repository.searchByName("%$query%")
+    operator fun invoke(query: String = "", minQuantity: Int = 0): Flow<List<Ingredient>> =
+        if (query.trim().isEmpty()) repository.getIngredients(minQuantity)
+        else repository.searchByName(pattern = "%$query%", minQuantity)
 }

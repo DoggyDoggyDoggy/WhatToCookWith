@@ -15,13 +15,13 @@ class IngredientRepositoryImpl @Inject constructor(
     override suspend fun insertIngredient(ingredient: Ingredient) =
         ingredientDao.insertIngredient(ingredient.toEntity())
 
-    override fun getIngredients(): Flow<List<Ingredient>> =
-        ingredientDao.getIngredients().map { ingredients ->
+    override fun getIngredients(minQuantity: Int): Flow<List<Ingredient>> =
+        ingredientDao.getIngredients(minQuantity).map { ingredients ->
             ingredients.map { it.toDomain() }
         }
 
-    override fun searchByName(pattern: String): Flow<List<Ingredient>> =
-        ingredientDao.searchByName(pattern).map { ingredients ->
+    override fun searchByName(pattern: String, minQuantity: Int): Flow<List<Ingredient>> =
+        ingredientDao.searchByName(pattern, minQuantity).map { ingredients ->
             ingredients.map { it.toDomain() }
         }
 
