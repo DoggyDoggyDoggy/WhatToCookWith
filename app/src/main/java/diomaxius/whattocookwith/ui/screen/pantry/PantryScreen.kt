@@ -33,27 +33,21 @@ import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpa
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.IngredientCardForPantry
 import diomaxius.whattocookwith.ui.components.ingredientcard.ingredientcardforpantry.Pantry
 
-enum class ScreenState(val title: String) {
-    PANTRY("My pantry"),
-    INGREDIENTS("All ingredients")
-}
-
 @Composable
 fun PantryScreen(
     viewModel: PantryScreenViewModel = hiltViewModel(),
 ) {
     val pantry by viewModel.ingredients.collectAsState()
     val query by viewModel.query.collectAsState()
+    val screenState by viewModel.screenState.collectAsState()
 
     val navHostController = LocalNavController.current
     val focusManager = LocalFocusManager.current
 
-    var state by rememberSaveable { mutableStateOf(ScreenState.PANTRY) }
-
     Scaffold(
         topBar = {
             TopBar(
-                text = if (state == ScreenState.PANTRY) ScreenState.PANTRY.title else ScreenState.INGREDIENTS.title,
+                text = if (screenState == ScreenState.PANTRY) ScreenState.PANTRY.title else ScreenState.INGREDIENTS.title,
                 navigationButton = {
                     PopBackArrowButton(navHostController)
                 }
@@ -61,8 +55,8 @@ fun PantryScreen(
         },
         bottomBar = {
             PantryBottomBar(
-                state = state,
-                setState = { state = it }
+                state = screenState,
+                setState = viewModel::setScreenState
             )
         }
     ) { innerPadding ->
@@ -73,8 +67,7 @@ fun PantryScreen(
             increaseIngredientQuantity = viewModel::increaseIngredientQuantity,
             decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity,
             setQuery = viewModel::setQuery,
-            focusManager = focusManager,
-            state = state
+            focusManager = focusManager
         )
     }
 }
@@ -87,8 +80,7 @@ fun Content(
     increaseIngredientQuantity: (Ingredient) -> Unit,
     decreaseIngredientQuantity: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
-    focusManager: FocusManager,
-    state: ScreenState
+    focusManager: FocusManager
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -113,10 +105,7 @@ fun Content(
                 item {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
-                items(
-                    pantry.filter { if (state == ScreenState.PANTRY) it.quantity >= 0 else it.quantity > 0 },
-                    key = { it.name }
-                ) { ingredient ->
+                items(pantry, key = { it.name }) { ingredient ->
                     var editablePantry by rememberSaveable { mutableStateOf(false) }
 
                     if (!editablePantry) {
@@ -145,7 +134,6 @@ fun Content(
                             )
                         }
                     }
-
                 }
             }
         }
