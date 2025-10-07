@@ -53,7 +53,7 @@ fun PantryScreen(
     Scaffold(
         topBar = {
             TopBar(
-                text = if (state == ScreenState.PANTRY) "My pantry" else "All ingredients",
+                text = if (state == ScreenState.PANTRY) ScreenState.PANTRY.title else ScreenState.INGREDIENTS.title,
                 navigationButton = {
                     PopBackArrowButton(navHostController)
                 }
