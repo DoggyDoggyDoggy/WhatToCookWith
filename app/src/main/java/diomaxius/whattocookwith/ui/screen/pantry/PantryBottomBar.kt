@@ -47,23 +47,8 @@ fun PantryBottomBar(
     ) {
         screens.forEachIndexed { index, screen ->
             val selected = selectedIndex == index
-            val tabModifier = if (selected) {
-                Modifier
-                    .zIndex(1f)
-                    .padding(horizontal = 12.dp)
-                    .clip(RoundedCornerShape(32.dp))
-            } else {
-                Modifier
-                    .zIndex(1f)
-                    .padding(horizontal = 12.dp)
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.tertiary,
-                        shape = RoundedCornerShape(32.dp)
-                    )
-            }
             Tab(
-                modifier = tabModifier,
+                modifier = Modifier.tabModifier(selected),
                 selected = selected,
                 onClick = { setState(screen) },
                 text = {
@@ -75,5 +60,25 @@ fun PantryBottomBar(
                 }
             )
         }
+    }
+}
+
+@Composable
+fun Modifier.tabModifier(selected: Boolean): Modifier {
+    return if (selected) {
+        this
+            .zIndex(1f)
+            .padding(horizontal = 12.dp)
+            .clip(RoundedCornerShape(64.dp))
+    } else {
+        this
+            .zIndex(1f)
+            .padding(horizontal = 12.dp)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.tertiary,
+                shape = RoundedCornerShape(64.dp)
+            )
+            .clip(RoundedCornerShape(64.dp))
     }
 }
