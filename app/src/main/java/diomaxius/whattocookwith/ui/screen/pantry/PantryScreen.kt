@@ -101,34 +101,49 @@ fun Content(
                 shape = RoundedCornerShape(32.dp)
             )
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
+            IngredientCardForPantryList(
+                pantry = pantry,
+                increaseIngredientQuantity = increaseIngredientQuantity,
+                decreaseIngredientQuantity = decreaseIngredientQuantity
+            )
+        }
+    }
+}
+
+@Composable
+fun IngredientCardForPantryList(
+    pantry: List<Ingredient>,
+    increaseIngredientQuantity: (Ingredient) -> Unit,
+    decreaseIngredientQuantity: (Ingredient) -> Unit,
+) {
+    var editablePantryName by rememberSaveable { mutableStateOf<String?>(null) }
+
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+        items(pantry, key = { it.name }) { ingredient ->
+            val isEditable = ingredient.name == editablePantryName
+
+            IngredientCardForPantry(
+                ingredient = ingredient,
+                onLongClick = {
+                    editablePantryName = if (isEditable) null else ingredient.name
                 }
-                items(pantry, key = { it.name }) { ingredient ->
-                    var editablePantry by rememberSaveable { mutableStateOf(false) }
 
-                    IngredientCardForPantry(
-                        ingredient = ingredient,
-                        onLongClick = {
-                            editablePantry = !editablePantry
-                        }
-
-                    ) {
-                        if (!editablePantry) {
-                            Pantry(
-                                ingredient = it
-                            )
-                        } else {
-                            EditablePantry(
-                                ingredient = it,
-                                increaseQuantity = increaseIngredientQuantity,
-                                decreaseQuantity = decreaseIngredientQuantity
-                            )
-                        }
-                    }
+            ) {
+                if (!isEditable) {
+                    Pantry(
+                        ingredient = it
+                    )
+                } else {
+                    EditablePantry(
+                        ingredient = it,
+                        increaseQuantity = increaseIngredientQuantity,
+                        decreaseQuantity = decreaseIngredientQuantity
+                    )
                 }
             }
         }
