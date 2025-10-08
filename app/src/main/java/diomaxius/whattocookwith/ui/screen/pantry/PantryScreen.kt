@@ -82,7 +82,7 @@ fun Content(
     decreaseIngredientQuantity: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
     focusManager: FocusManager,
-    state: ScreenState
+    state: ScreenState,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -110,25 +110,18 @@ fun Content(
                 items(pantry, key = { it.name }) { ingredient ->
                     var editablePantry by rememberSaveable { mutableStateOf(false) }
 
-                    if (!editablePantry) {
-                        IngredientCardForPantry(
-                            ingredient = ingredient,
-                            onLongClick = {
-                                editablePantry = !editablePantry
-                            }
+                    IngredientCardForPantry(
+                        ingredient = ingredient,
+                        onLongClick = {
+                            editablePantry = !editablePantry
+                        }
 
-                        ) {
+                    ) {
+                        if (!editablePantry) {
                             Pantry(
                                 ingredient = it
                             )
-                        }
-                    } else {
-                        IngredientCardForPantry(
-                            ingredient = ingredient,
-                            onLongClick = {
-                                editablePantry = !editablePantry
-                            }
-                        ) {
+                        } else {
                             EditablePantry(
                                 ingredient = it,
                                 increaseQuantity = increaseIngredientQuantity,
