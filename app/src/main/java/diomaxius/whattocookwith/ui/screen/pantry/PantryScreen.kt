@@ -67,7 +67,8 @@ fun PantryScreen(
             increaseIngredientQuantity = viewModel::increaseIngredientQuantity,
             decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity,
             setQuery = viewModel::setQuery,
-            focusManager = focusManager
+            focusManager = focusManager,
+            state = screenState
         )
     }
 }
@@ -80,7 +81,8 @@ fun Content(
     increaseIngredientQuantity: (Ingredient) -> Unit,
     decreaseIngredientQuantity: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
-    focusManager: FocusManager
+    focusManager: FocusManager,
+    state: ScreenState
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
