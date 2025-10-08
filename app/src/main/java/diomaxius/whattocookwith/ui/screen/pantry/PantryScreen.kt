@@ -68,7 +68,7 @@ fun PantryScreen(
             decreaseIngredientQuantity = viewModel::decreaseIngredientQuantity,
             setQuery = viewModel::setQuery,
             focusManager = focusManager,
-            state = screenState
+            screenState = screenState
         )
     }
 }
@@ -82,7 +82,7 @@ fun Content(
     decreaseIngredientQuantity: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
     focusManager: FocusManager,
-    state: ScreenState,
+    screenState: ScreenState,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface
@@ -104,7 +104,8 @@ fun Content(
             IngredientCardForPantryList(
                 pantry = pantry,
                 increaseIngredientQuantity = increaseIngredientQuantity,
-                decreaseIngredientQuantity = decreaseIngredientQuantity
+                decreaseIngredientQuantity = decreaseIngredientQuantity,
+                screenState = screenState
             )
         }
     }
@@ -115,6 +116,7 @@ fun IngredientCardForPantryList(
     pantry: List<Ingredient>,
     increaseIngredientQuantity: (Ingredient) -> Unit,
     decreaseIngredientQuantity: (Ingredient) -> Unit,
+    screenState: ScreenState,
 ) {
     var editablePantryName by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -125,7 +127,8 @@ fun IngredientCardForPantryList(
             Spacer(modifier = Modifier.height(8.dp))
         }
         items(pantry, key = { it.name }) { ingredient ->
-            val isEditable = ingredient.name == editablePantryName
+            val isEditable =
+                if (screenState == ScreenState.PANTRY) ingredient.name == editablePantryName else true
 
             IngredientCardForPantry(
                 ingredient = ingredient,
