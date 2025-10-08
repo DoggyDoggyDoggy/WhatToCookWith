@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.pantry
+package diomaxius.whattocookwith.ui.screen.pantry.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import diomaxius.whattocookwith.ui.screen.pantry.ScreenState
 
 @Composable
 fun PantryBottomBar(
