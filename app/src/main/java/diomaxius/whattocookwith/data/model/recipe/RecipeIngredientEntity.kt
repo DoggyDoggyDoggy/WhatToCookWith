@@ -1,9 +1,10 @@
-package diomaxius.whattocookwith.data.model
+package diomaxius.whattocookwith.data.model.recipe
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
+import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
 
 @Entity(
     primaryKeys = ["recipeId", "ingredientName"],

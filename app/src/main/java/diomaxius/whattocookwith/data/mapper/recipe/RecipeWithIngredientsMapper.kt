@@ -1,6 +1,6 @@
-package diomaxius.whattocookwith.data.mapper
+package diomaxius.whattocookwith.data.mapper.recipe
 
-import diomaxius.whattocookwith.data.model.RecipeWithIngredients
+import diomaxius.whattocookwith.data.model.recipe.RecipeWithIngredients
 import diomaxius.whattocookwith.domain.model.Recipe
 
 fun RecipeWithIngredients.toDomain(): Recipe = Recipe(

@@ -1,8 +1,8 @@
 package diomaxius.whattocookwith.data.repository
 
 import diomaxius.whattocookwith.data.dao.IngredientDao
-import diomaxius.whattocookwith.data.mapper.toDomain
-import diomaxius.whattocookwith.data.mapper.toEntity
+import diomaxius.whattocookwith.data.mapper.ingredient.toDomain
+import diomaxius.whattocookwith.data.mapper.ingredient.toEntity
 import diomaxius.whattocookwith.domain.repository.IngredientRepository
 import diomaxius.whattocookwith.domain.model.Ingredient
 import kotlinx.coroutines.flow.Flow

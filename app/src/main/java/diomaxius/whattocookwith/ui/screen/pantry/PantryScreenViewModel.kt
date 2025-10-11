@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import diomaxius.whattocookwith.domain.model.Ingredient
-import diomaxius.whattocookwith.domain.usecase.DecreaseIngredientQuantityUseCase
-import diomaxius.whattocookwith.domain.usecase.GetAllIngredientsFromTableUseCase
-import diomaxius.whattocookwith.domain.usecase.IncreaseIngredientQuantityUseCase
+import diomaxius.whattocookwith.domain.usecase.ingredient.DecreaseIngredientQuantityUseCase
+import diomaxius.whattocookwith.domain.usecase.ingredient.GetAllIngredientsFromTableUseCase
+import diomaxius.whattocookwith.domain.usecase.ingredient.IncreaseIngredientQuantityUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

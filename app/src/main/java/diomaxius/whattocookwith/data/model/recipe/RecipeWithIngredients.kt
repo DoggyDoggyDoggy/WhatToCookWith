@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.data.model
+package diomaxius.whattocookwith.data.model.recipe
 
 import androidx.room.Embedded
 import androidx.room.Relation

@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import diomaxius.whattocookwith.data.model.IngredientEntity
+import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

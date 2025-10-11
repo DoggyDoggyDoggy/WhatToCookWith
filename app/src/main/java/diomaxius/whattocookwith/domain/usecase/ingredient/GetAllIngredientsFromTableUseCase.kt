@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.domain.usecase
+package diomaxius.whattocookwith.domain.usecase.ingredient
 
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.domain.repository.IngredientRepository

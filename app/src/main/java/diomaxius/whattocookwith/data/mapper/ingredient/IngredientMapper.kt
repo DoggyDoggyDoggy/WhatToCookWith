@@ -1,6 +1,6 @@
-package diomaxius.whattocookwith.data.mapper
+package diomaxius.whattocookwith.data.mapper.ingredient
 
-import diomaxius.whattocookwith.data.model.IngredientEntity
+import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
 import diomaxius.whattocookwith.domain.model.Ingredient
 
 fun IngredientEntity.toDomain(): Ingredient = Ingredient(

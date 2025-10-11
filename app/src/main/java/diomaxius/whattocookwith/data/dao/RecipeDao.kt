@@ -7,9 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import diomaxius.whattocookwith.data.model.RecipeEntity
-import diomaxius.whattocookwith.data.model.RecipeIngredientEntity
-import diomaxius.whattocookwith.data.model.RecipeWithIngredients
+import diomaxius.whattocookwith.data.model.recipe.RecipeEntity
+import diomaxius.whattocookwith.data.model.recipe.RecipeIngredientEntity
+import diomaxius.whattocookwith.data.model.recipe.RecipeWithIngredients
 
 @Dao
 interface RecipeDao {
