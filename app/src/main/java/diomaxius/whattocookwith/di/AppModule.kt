@@ -8,9 +8,12 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import diomaxius.whattocookwith.data.dao.IngredientDao
+import diomaxius.whattocookwith.data.dao.RecipeDao
 import diomaxius.whattocookwith.data.database.IngredientDatabase
 import diomaxius.whattocookwith.data.repository.IngredientRepositoryImpl
+import diomaxius.whattocookwith.data.repository.RecipeRepositoryImpl
 import diomaxius.whattocookwith.domain.repository.IngredientRepository
+import diomaxius.whattocookwith.domain.repository.RecipeRepository
 import javax.inject.Singleton
 
 @Module
@@ -43,4 +46,10 @@ object AppModule {
     fun provideRecipeDao(
         db: IngredientDatabase,
     ) = db.recipeDao()
+
+    @Provides
+    @Singleton
+    fun provideRecipeRepository(
+        dao: RecipeDao,
+    ): RecipeRepository = RecipeRepositoryImpl(dao)
 }
