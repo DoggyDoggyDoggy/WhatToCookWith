@@ -19,7 +19,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ) = Room.databaseBuilder(
         context,
         IngredientDatabase::class.java,
@@ -29,12 +29,18 @@ object AppModule {
     @Provides
     @Singleton
     fun provideIngredientDao(
-        db: IngredientDatabase
+        db: IngredientDatabase,
     ) = db.ingredientDao()
-    
+
     @Provides
     @Singleton
     fun provideIngredientRepository(
-        dao: IngredientDao
-    ) : IngredientRepository = IngredientRepositoryImpl(dao)
+        dao: IngredientDao,
+    ): IngredientRepository = IngredientRepositoryImpl(dao)
+
+    @Provides
+    @Singleton
+    fun provideRecipeDao(
+        db: IngredientDatabase,
+    ) = db.recipeDao()
 }
