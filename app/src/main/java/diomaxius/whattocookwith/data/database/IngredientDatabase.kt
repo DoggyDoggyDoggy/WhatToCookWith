@@ -4,9 +4,9 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import diomaxius.whattocookwith.data.dao.IngredientDao
 import diomaxius.whattocookwith.data.dao.RecipeDao
-import diomaxius.whattocookwith.data.model.IngredientEntity
-import diomaxius.whattocookwith.data.model.RecipeEntity
-import diomaxius.whattocookwith.data.model.RecipeIngredientEntity
+import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
+import diomaxius.whattocookwith.data.model.recipe.RecipeEntity
+import diomaxius.whattocookwith.data.model.recipe.RecipeIngredientEntity
 
 @Database(
     entities = [
