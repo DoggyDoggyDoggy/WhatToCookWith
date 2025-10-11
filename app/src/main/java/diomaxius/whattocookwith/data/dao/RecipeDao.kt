@@ -1,0 +1,72 @@
+package diomaxius.whattocookwith.data.dao
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
+import diomaxius.whattocookwith.data.model.RecipeEntity
+import diomaxius.whattocookwith.data.model.RecipeIngredientEntity
+import diomaxius.whattocookwith.data.model.RecipeWithIngredients
+
+@Dao
+interface RecipeDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipe(recipe: RecipeEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipeIngredients(items: List<RecipeIngredientEntity>)
+
+    @Update
+    suspend fun updateRecipe(recipe: RecipeEntity)
+
+    @Delete
+    suspend fun deleteRecipe(recipe: RecipeEntity)
+
+    @Query("DELETE FROM RecipeIngredientEntity WHERE recipeId = :recipeId")
+    suspend fun deleteIngredientsByRecipeId(recipeId: Long)
+
+    @Transaction
+    @Query("SELECT * FROM RecipeEntity")
+    suspend fun getAllRecipesWithIngredients(): List<RecipeWithIngredients>
+
+    @Transaction
+    @Query("SELECT * FROM RecipeEntity WHERE id = :id")
+    suspend fun getRecipeWithIngredients(id: Long): RecipeWithIngredients
+
+    @Transaction
+    suspend fun insertFullRecipe(recipe: RecipeEntity, items: List<RecipeIngredientEntity>) {
+        val id = insertRecipe(recipe)
+        val prepared = items.map { it.copy(recipeId = id) }
+        insertRecipeIngredients(prepared)
+    }
+
+    @Transaction
+    suspend fun updateFullRecipe(recipe: RecipeEntity, items: List<RecipeIngredientEntity>) {
+        updateRecipe(recipe)
+        deleteIngredientsByRecipeId(recipe.id)
+        val prepared = items.map { it.copy(recipeId = recipe.id) }
+        insertRecipeIngredients(prepared)
+    }
+
+    @Transaction
+    @Query(
+        """
+        SELECT r.* FROM RecipeEntity r
+        LEFT JOIN RecipeIngredientEntity ri ON r.id = ri.recipeId
+        LEFT JOIN IngredientEntity p ON p.name = ri.ingredientName
+        GROUP BY r.id
+        HAVING SUM(
+            CASE
+                WHEN ri.optional = 1 THEN 0
+                WHEN p.name IS NULL THEN 1
+                WHEN p.quantity < ri.requiredQuantity THEN 1
+                ELSE 0
+            END
+        ) = 0
+        """
+    )
+    suspend fun getMakeableRecipesWithIngredients(): List<RecipeWithIngredients>
+}
