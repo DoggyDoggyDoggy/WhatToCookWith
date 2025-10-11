@@ -8,4 +8,3 @@ data class RecipeWithIngredients(
     @Relation(parentColumn = "id", entityColumn = "recipeId")
     val ingredients: List<RecipeIngredientEntity>
 )
-
