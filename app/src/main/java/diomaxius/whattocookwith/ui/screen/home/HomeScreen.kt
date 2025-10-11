@@ -49,5 +49,14 @@ fun Content(
         ) {
             Text("Go to pantry")
         }
+        Button(
+            onClick = {
+                navHostController.navigate(NavScreen.AddRecipe.route) {
+                    launchSingleTop = true
+                }
+            }
+        ) {
+            Text("Add recipe")
+        }
     }
 }
