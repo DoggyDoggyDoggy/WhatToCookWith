@@ -1,6 +1,5 @@
 package diomaxius.whattocookwith.ui.screen.addrecipe
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,9 +8,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.domain.model.RecipeIngredient
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
@@ -24,6 +23,8 @@ fun AddRecipeScreen(
     val recipeName by viewModel.recipeName.collectAsState()
     val recipeInstructions by viewModel.recipeInstructions.collectAsState()
     val recipeIngredients by viewModel.recipeIngredients.collectAsState()
+
+    val allIngredients by viewModel.allIngredients.collectAsState()
 
     val navHostController = LocalNavController.current
 
@@ -40,6 +41,10 @@ fun AddRecipeScreen(
             recipeName = recipeName,
             recipeInstructions = recipeInstructions,
             recipeIngredients = recipeIngredients,
+            allIngredients = allIngredients,
+            onRecipeNameChange = viewModel::onRecipeNameChange,
+            onRecipeInstructionsChange = viewModel::onRecipeInstructionsChange,
+            onRecipeIngredientChange = viewModel::onRecipeIngredientChange
         )
     }
 }
@@ -50,19 +55,23 @@ fun Content(
     recipeName: String,
     recipeInstructions: String,
     recipeIngredients: List<RecipeIngredient>,
+    allIngredients: List<Ingredient>,
+    onRecipeNameChange: (String) -> Unit,
+    onRecipeInstructionsChange: (String) -> Unit,
+    onRecipeIngredientChange: (RecipeIngredient) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
         OutlinedTextField(
             value = recipeName,
-            onValueChange = { },
+            onValueChange = {onRecipeNameChange(it)},
             label = { }
         )
 
         OutlinedTextField(
             value = recipeInstructions,
-            onValueChange = { },
+            onValueChange = { onRecipeInstructionsChange(it)},
             label = { }
         )
     }
