@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import kotlin.collections.emptyList
@@ -20,12 +23,18 @@ class AddRecipeScreenViewModel @Inject constructor(
     getAllIngredientsFromTableUseCase: GetAllIngredientsFromTableUseCase,
     private val insertFullRecipeUseCase: InsertFullRecipeUseCase,
 ) : ViewModel() {
-    val allIngredients: StateFlow<List<Ingredient>> =
-        getAllIngredientsFromTableUseCase().stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query
+
+    val allIngredients: StateFlow<List<Ingredient>> = _query
+        .debounce(300)
+        .distinctUntilChanged()
+        .flatMapLatest { q ->
+            getAllIngredientsFromTableUseCase(q)
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun setQuery(q: String) { _query.value = q }
 
     private val _recipeName = MutableStateFlow("")
     val recipeName: StateFlow<String> = _recipeName.asStateFlow()

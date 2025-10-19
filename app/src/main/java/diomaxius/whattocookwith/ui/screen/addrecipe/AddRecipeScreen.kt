@@ -48,6 +48,7 @@ fun AddRecipeScreen(
     val recipeIngredients by viewModel.recipeIngredients.collectAsState()
 
     val allIngredients by viewModel.allIngredients.collectAsState()
+    val query by viewModel.query.collectAsState()
 
     val navHostController = LocalNavController.current
 
@@ -65,9 +66,11 @@ fun AddRecipeScreen(
             recipeInstructions = recipeInstructions,
             recipeIngredients = recipeIngredients,
             allIngredients = allIngredients,
+            query = query,
             onRecipeNameChange = viewModel::onRecipeNameChange,
             onRecipeInstructionsChange = viewModel::onRecipeInstructionsChange,
-            addRecipeIngredient = viewModel::addRecipeIngredient
+            addRecipeIngredient = viewModel::addRecipeIngredient,
+            setQuery = viewModel::setQuery
         )
     }
 }
@@ -79,9 +82,11 @@ fun Content(
     recipeInstructions: String,
     recipeIngredients: List<RecipeIngredient>,
     allIngredients: List<Ingredient>,
+    query: String,
     onRecipeNameChange: (String) -> Unit,
     onRecipeInstructionsChange: (String) -> Unit,
     addRecipeIngredient: (Ingredient) -> Unit,
+    setQuery: (String) -> Unit,
 ) {
     var showAllIngredientsDialog by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -128,6 +133,8 @@ fun Content(
             AllIngredientDialog(
                 onCloseDialog = { showAllIngredientsDialog = false },
                 allIngredients = allIngredients,
+                query = query,
+                setQuery = setQuery,
                 focusManager = focusManager,
                 addRecipeIngredient = addRecipeIngredient
             )

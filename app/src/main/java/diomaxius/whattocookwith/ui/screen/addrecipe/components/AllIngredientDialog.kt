@@ -34,6 +34,8 @@ fun AllIngredientDialog(
     allIngredients: List<Ingredient>,
     focusManager: FocusManager,
     addRecipeIngredient: (Ingredient) -> Unit,
+    query: String,
+    setQuery: (String) -> Unit,
 ) {
     AlertDialog(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -68,8 +70,8 @@ fun AllIngredientDialog(
             ) {
                 item {
                     SearchOutlinedTextField(
-                        query = "",
-                        onQueryChange = {},
+                        query = query,
+                        onQueryChange = {setQuery(it)},
                         focusManager = focusManager,
                         shape = RoundedCornerShape(16.dp)
                     )
