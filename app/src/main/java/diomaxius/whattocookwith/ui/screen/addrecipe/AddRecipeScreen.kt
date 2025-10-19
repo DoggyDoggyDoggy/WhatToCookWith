@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -139,9 +141,13 @@ fun Content(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             TextField(
+                                modifier = Modifier.width(75.dp),
                                 value = if (recipeIngredient.requiredQuantity == 0) "" else recipeIngredient.requiredQuantity.toString(),
                                 onValueChange = {
-                                    if (it.isNotEmpty()) onRecipeIngredientChangeQuantity(it.toInt(), index)
+                                    if (it.isNotEmpty() && it.isNotBlank()) {
+                                        if (it.length < 5 && it.all { char -> char.isDigit() })
+                                            onRecipeIngredientChangeQuantity(it.toInt(), index)
+                                    }
                                     else onRecipeIngredientChangeQuantity(0, index)
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -149,8 +155,14 @@ fun Content(
                                     imeAction = ImeAction.Done
                                 ),
                                 singleLine = true,
-                                modifier = Modifier.width(96.dp)
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                )
                             )
+
+                            Spacer(modifier = Modifier.width(8.dp))
+
                             Text(recipeIngredient.unit)
                         }
                     }
