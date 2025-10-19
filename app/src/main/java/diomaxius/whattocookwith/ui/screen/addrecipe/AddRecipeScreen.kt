@@ -2,30 +2,20 @@ package diomaxius.whattocookwith.ui.screen.addrecipe
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import diomaxius.whattocookwith.domain.model.Ingredient
@@ -35,6 +25,7 @@ import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.AllIngredientDialog
+import diomaxius.whattocookwith.ui.screen.addrecipe.components.IngredientCardAction
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.RecipeInstructions
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.RecipeName
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.recipeingredients.RecipeIngredientRow
@@ -137,34 +128,11 @@ fun Content(
                         unit = recipeIngredient.unit
                     ),
                     actions = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            TextField(
-                                modifier = Modifier.width(75.dp),
-                                value = if (recipeIngredient.requiredQuantity == 0) "" else recipeIngredient.requiredQuantity.toString(),
-                                onValueChange = {
-                                    if (it.isNotEmpty() && it.isNotBlank()) {
-                                        if (it.length < 5 && it.all { char -> char.isDigit() })
-                                            onRecipeIngredientChangeQuantity(it.toInt(), index)
-                                    }
-                                    else onRecipeIngredientChangeQuantity(0, index)
-                                },
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Number,
-                                    imeAction = ImeAction.Done
-                                ),
-                                singleLine = true,
-                                colors = TextFieldDefaults.colors(
-                                    focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                    unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                )
-                            )
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            Text(recipeIngredient.unit)
-                        }
+                        IngredientCardAction(
+                            recipeIngredient = recipeIngredient,
+                            index = index,
+                            onRecipeIngredientChangeQuantity = onRecipeIngredientChangeQuantity
+                        )
                     }
                 )
             }
