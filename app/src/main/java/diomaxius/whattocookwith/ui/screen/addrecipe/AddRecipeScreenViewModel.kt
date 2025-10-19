@@ -78,7 +78,7 @@ class AddRecipeScreenViewModel @Inject constructor(
             RecipeIngredient(
                 recipeId = 0,
                 ingredientName = ingredient.name,
-                requiredQuantity = ingredient.quantity,
+                requiredQuantity = 0,
                 unit = ingredient.unit,
                 optional = false
             )
