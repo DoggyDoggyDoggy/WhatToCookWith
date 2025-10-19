@@ -36,6 +36,8 @@ import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
+import diomaxius.whattocookwith.ui.screen.addrecipe.components.RecipeInstructions
+import diomaxius.whattocookwith.ui.screen.addrecipe.components.RecipeName
 
 const val RECIPE_NAME_PLACEHOLDER = "For example: Pancakes"
 const val RECIPE_Instructions_PLACEHOLDER = """For example:
@@ -98,38 +100,15 @@ fun Content(
             .padding(top = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "Recipe name:",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Medium
-            )
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = recipeName,
-                onValueChange = { onRecipeNameChange(it) },
-                placeholder = { Text(RECIPE_NAME_PLACEHOLDER) }
-            )
-        }
+        RecipeName(
+            recipeName = recipeName,
+            onRecipeNameChange = onRecipeNameChange
+        )
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "Recipe instructions:",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Medium
-            )
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                minLines = 16,
-                value = recipeInstructions,
-                onValueChange = { onRecipeInstructionsChange(it) },
-                placeholder = { Text(RECIPE_Instructions_PLACEHOLDER) }
-            )
-        }
+        RecipeInstructions(
+            recipeInstructions = recipeInstructions,
+            onRecipeInstructionsChange = onRecipeInstructionsChange
+        )
 
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
