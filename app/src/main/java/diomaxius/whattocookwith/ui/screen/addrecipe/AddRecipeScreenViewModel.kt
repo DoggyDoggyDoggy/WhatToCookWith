@@ -34,7 +34,9 @@ class AddRecipeScreenViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun setQuery(q: String) { _query.value = q }
+    fun setQuery(q: String) {
+        _query.value = q
+    }
 
     private val _recipeName = MutableStateFlow("")
     val recipeName: StateFlow<String> = _recipeName.asStateFlow()
@@ -62,6 +64,13 @@ class AddRecipeScreenViewModel @Inject constructor(
         _recipeIngredients.value = newList
     }
 
+    fun onRecipeIngredientDelete(index: Int) {
+        val current = _recipeIngredients.value
+
+        val newList = current.toMutableList()
+        newList.removeAt(index)
+        _recipeIngredients.value = newList
+    }
 
     fun addRecipeIngredient(ingredient: Ingredient) {
         val ingredients = _recipeIngredients.value.toMutableList()

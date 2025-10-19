@@ -72,7 +72,8 @@ fun AddRecipeScreen(
             onRecipeInstructionsChange = viewModel::onRecipeInstructionsChange,
             addRecipeIngredient = viewModel::addRecipeIngredient,
             setQuery = viewModel::setQuery,
-            onRecipeIngredientChangeQuantity = viewModel::onRecipeIngredientChangeQuantity
+            onRecipeIngredientChangeQuantity = viewModel::onRecipeIngredientChangeQuantity,
+            onRecipeIngredientDelete = viewModel::onRecipeIngredientDelete
         )
     }
 }
@@ -90,6 +91,7 @@ fun Content(
     addRecipeIngredient: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
     onRecipeIngredientChangeQuantity: (Int, Int) -> Unit,
+    onRecipeIngredientDelete: (Int) -> Unit
 ) {
     var showAllIngredientsDialog by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -131,7 +133,8 @@ fun Content(
                         IngredientCardAction(
                             recipeIngredient = recipeIngredient,
                             index = index,
-                            onRecipeIngredientChangeQuantity = onRecipeIngredientChangeQuantity
+                            onRecipeIngredientChangeQuantity = onRecipeIngredientChangeQuantity,
+                            onRecipeIngredientDelete = onRecipeIngredientDelete
                         )
                     }
                 )

@@ -1,9 +1,13 @@
 package diomaxius.whattocookwith.ui.screen.addrecipe.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -20,9 +24,11 @@ import diomaxius.whattocookwith.domain.model.RecipeIngredient
 fun IngredientCardAction(
     recipeIngredient: RecipeIngredient,
     index: Int,
-    onRecipeIngredientChangeQuantity: (Int, Int) -> Unit
+    onRecipeIngredientChangeQuantity: (Int, Int) -> Unit,
+    onRecipeIngredientDelete: (Int) -> Unit
 ) {
     Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         TextField(
@@ -46,8 +52,17 @@ fun IngredientCardAction(
             )
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
-
         Text(recipeIngredient.unit)
+
+        IconButton(
+            onClick = {
+                onRecipeIngredientDelete(index)
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = null
+            )
+        }
     }
 }
