@@ -41,6 +41,7 @@ import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.SearchOutlinedTextField
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
+import diomaxius.whattocookwith.ui.screen.addrecipe.components.AllIngredientDialog
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.RecipeInstructions
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.RecipeName
 import diomaxius.whattocookwith.ui.screen.addrecipe.components.recipeingredients.RecipeIngredientRow
@@ -148,73 +149,4 @@ fun Content(
             )
         }
     }
-}
-
-@Composable
-fun AllIngredientDialog(
-    onCloseDialog: () -> Unit,
-    allIngredients: List<Ingredient>,
-    focusManager: FocusManager,
-) {
-    AlertDialog(
-        containerColor = MaterialTheme.colorScheme.surface,
-        onDismissRequest = { onCloseDialog() },
-        title = {
-            Column {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Add ingredient",
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Medium
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = onCloseDialog
-            ) {
-                Text("Close")
-            }
-        },
-        text = {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item {
-                    SearchOutlinedTextField(
-                        query = "",
-                        onQueryChange = {},
-                        focusManager = focusManager,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                }
-                items(allIngredients, key = { it.name }) {
-                    IngredientCard(
-                        ingredient = it,
-                        actions = {
-                            IconButton(
-                                colors = IconButtonDefaults.iconButtonColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                                ),
-                                onClick = { }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = "Add ingredient",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                    )
-                }
-            }
-        },
-    )
 }
