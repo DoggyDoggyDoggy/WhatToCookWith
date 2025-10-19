@@ -33,6 +33,7 @@ fun AllIngredientDialog(
     onCloseDialog: () -> Unit,
     allIngredients: List<Ingredient>,
     focusManager: FocusManager,
+    addRecipeIngredient: (Ingredient) -> Unit,
 ) {
     AlertDialog(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -73,15 +74,17 @@ fun AllIngredientDialog(
                         shape = RoundedCornerShape(16.dp)
                     )
                 }
-                items(allIngredients, key = { it.name }) {
+                items(allIngredients, key = { it.name }) { ingredient ->
                     IngredientCard(
-                        ingredient = it,
+                        ingredient = ingredient,
                         actions = {
                             IconButton(
                                 colors = IconButtonDefaults.iconButtonColors(
                                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                                 ),
-                                onClick = { }
+                                onClick = {
+                                    addRecipeIngredient(ingredient)
+                                }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Add,
