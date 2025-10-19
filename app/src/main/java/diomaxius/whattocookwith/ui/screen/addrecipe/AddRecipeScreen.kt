@@ -96,7 +96,7 @@ fun Content(
     onRecipeInstructionsChange: (String) -> Unit,
     addRecipeIngredient: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
-    onRecipeIngredientChangeQuantity: (Double, Int) -> Unit,
+    onRecipeIngredientChangeQuantity: (Int, Int) -> Unit,
 ) {
     var showAllIngredientsDialog by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -131,7 +131,7 @@ fun Content(
                 IngredientCard(
                     ingredient = Ingredient(
                         name = recipeIngredient.ingredientName,
-                        quantity = recipeIngredient.requiredQuantity.toInt(), // Maybe refactor Ingredient model quantity to Int data type
+                        quantity = recipeIngredient.requiredQuantity,
                         unit = recipeIngredient.unit
                     ),
                     actions = {
@@ -140,7 +140,7 @@ fun Content(
                         ) {
                             TextField(
                                 value = recipeIngredient.requiredQuantity.toString(),
-                                onValueChange = { onRecipeIngredientChangeQuantity(it.toDouble(), index) },
+                                onValueChange = { onRecipeIngredientChangeQuantity(it.toInt(), index) },
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Number,
                                     imeAction = ImeAction.Done

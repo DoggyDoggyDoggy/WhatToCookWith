@@ -26,7 +26,7 @@ import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
 data class RecipeIngredientEntity(
     val recipeId: Long,
     val ingredientName: String,
-    val requiredQuantity: Double,
+    val requiredQuantity: Int,
     val unit: String,
     val optional: Boolean = false,
 )

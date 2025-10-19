@@ -53,7 +53,7 @@ class AddRecipeScreenViewModel @Inject constructor(
         _recipeInstructions.value = instructions
     }
 
-    fun onRecipeIngredientChangeQuantity(quantity: Double, index: Int) {
+    fun onRecipeIngredientChangeQuantity(quantity: Int, index: Int) {
         val current = _recipeIngredients.value
 
         val newList = current.toMutableList()
@@ -69,7 +69,7 @@ class AddRecipeScreenViewModel @Inject constructor(
             RecipeIngredient(
                 recipeId = 0,
                 ingredientName = ingredient.name,
-                requiredQuantity = ingredient.quantity.toDouble(),
+                requiredQuantity = ingredient.quantity,
                 unit = ingredient.unit,
                 optional = false
             )
