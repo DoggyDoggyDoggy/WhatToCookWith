@@ -139,8 +139,11 @@ fun Content(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             TextField(
-                                value = recipeIngredient.requiredQuantity.toString(),
-                                onValueChange = { onRecipeIngredientChangeQuantity(it.toInt(), index) },
+                                value = if (recipeIngredient.requiredQuantity == 0) "" else recipeIngredient.requiredQuantity.toString(),
+                                onValueChange = {
+                                    if (it.isNotEmpty()) onRecipeIngredientChangeQuantity(it.toInt(), index)
+                                    else onRecipeIngredientChangeQuantity(0, index)
+                                },
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Number,
                                     imeAction = ImeAction.Done
