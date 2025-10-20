@@ -1,5 +1,6 @@
 package diomaxius.whattocookwith.ui.screen.allrecipes
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -21,10 +22,14 @@ import diomaxius.whattocookwith.domain.model.Recipe
 fun RecipeCard(
     modifier: Modifier = Modifier,
     recipe: Recipe,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
-            .heightIn(max = 120.dp),
+            .heightIn(max = 120.dp)
+            .clickable{
+                onClick()
+            },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )

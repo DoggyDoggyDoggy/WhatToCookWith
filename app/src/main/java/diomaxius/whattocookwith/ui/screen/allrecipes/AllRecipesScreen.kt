@@ -13,8 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.navigation.LocalNavController
+import diomaxius.whattocookwith.navigation.NavScreen
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
 
@@ -36,7 +38,8 @@ fun AllRecipesScreen(
     ) { innerPadding ->
         Content(
             modifier = Modifier.padding(innerPadding),
-            allRecipes = allRecipes
+            allRecipes = allRecipes,
+            navHostController = navHostController
         )
     }
 }
@@ -45,6 +48,7 @@ fun AllRecipesScreen(
 fun Content(
     modifier: Modifier,
     allRecipes: List<Recipe>,
+    navHostController: NavHostController,
 ) {
     LazyColumn(
         modifier = modifier
@@ -56,7 +60,14 @@ fun Content(
             Spacer(modifier = Modifier)
         }
         items(allRecipes) { recipe ->
-            RecipeCard(recipe = recipe)
+            RecipeCard(
+                recipe = recipe,
+                onClick = {
+                    navHostController.navigate(NavScreen.Recipe.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
     }
 }

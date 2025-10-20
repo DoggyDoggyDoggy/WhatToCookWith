@@ -6,4 +6,5 @@ sealed class NavScreen (val route: String) {
     object Pantry: NavScreen("pantry")
     object AddRecipe: NavScreen("addrecipe")
     object AllRecipes: NavScreen("allrecipes")
+    object Recipe: NavScreen("recipe")
 }

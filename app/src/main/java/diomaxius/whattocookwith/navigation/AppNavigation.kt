@@ -12,6 +12,7 @@ import diomaxius.whattocookwith.ui.screen.allrecipes.AllRecipesScreen
 import diomaxius.whattocookwith.ui.screen.ingredients.IngredientsScreen
 import diomaxius.whattocookwith.ui.screen.home.HomeScreen
 import diomaxius.whattocookwith.ui.screen.pantry.PantryScreen
+import diomaxius.whattocookwith.ui.screen.recipe.RecipeScreen
 
 val LocalNavController = compositionLocalOf<NavHostController> {
     error("NavController not initialized")
@@ -40,6 +41,9 @@ fun AppNavigation(
             }
             composable(NavScreen.AllRecipes.route) {
                 AllRecipesScreen()
+            }
+            composable(NavScreen.Recipe.route) {
+                RecipeScreen()
             }
         }
     }
