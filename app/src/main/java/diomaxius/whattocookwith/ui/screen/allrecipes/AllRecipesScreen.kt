@@ -1,16 +1,17 @@
 package diomaxius.whattocookwith.ui.screen.allrecipes
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.navigation.LocalNavController
@@ -43,15 +44,19 @@ fun AllRecipesScreen(
 @Composable
 fun Content(
     modifier: Modifier,
-    allRecipes: List<Recipe>
+    allRecipes: List<Recipe>,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(allRecipes) {
-            Text(
-                text = it.name
-            )
+        item {
+            Spacer(modifier = Modifier)
+        }
+        items(allRecipes) { recipe ->
+            RecipeCard(recipe = recipe)
         }
     }
 }
