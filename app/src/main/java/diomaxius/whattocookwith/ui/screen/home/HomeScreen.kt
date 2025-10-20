@@ -65,7 +65,7 @@ fun Content(
                 }
             }
         ) {
-            Text("All recipe")
+            Text("All recipes")
         }
     }
 }
