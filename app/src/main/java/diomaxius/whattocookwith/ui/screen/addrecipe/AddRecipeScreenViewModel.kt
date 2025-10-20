@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.domain.model.RecipeIngredient
 import diomaxius.whattocookwith.domain.usecase.ingredient.GetAllIngredientsFromTableUseCase
 import diomaxius.whattocookwith.domain.usecase.recipe.InsertFullRecipeUseCase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.collections.emptyList
 
@@ -84,5 +86,16 @@ class AddRecipeScreenViewModel @Inject constructor(
             )
         )
         _recipeIngredients.value = ingredients
+    }
+
+    fun saveRecipe() = viewModelScope.launch {
+        insertFullRecipeUseCase(
+            Recipe(
+                id = 0,
+                name = _recipeName.value,
+                instructions = _recipeInstructions.value,
+                ingredients = _recipeIngredients.value
+            )
+        )
     }
 }

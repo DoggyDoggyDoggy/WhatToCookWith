@@ -82,7 +82,10 @@ fun AddRecipeScreen(
             addRecipeIngredient = viewModel::addRecipeIngredient,
             setQuery = viewModel::setQuery,
             onRecipeIngredientChangeQuantity = viewModel::onRecipeIngredientChangeQuantity,
-            onRecipeIngredientDelete = viewModel::onRecipeIngredientDelete
+            onRecipeIngredientDelete = viewModel::onRecipeIngredientDelete,
+            saveRecipe = viewModel::saveRecipe,
+            navigateUp = { navHostController.navigateUp() }
+
         )
     }
 }
@@ -100,7 +103,9 @@ fun Content(
     addRecipeIngredient: (Ingredient) -> Unit,
     setQuery: (String) -> Unit,
     onRecipeIngredientChangeQuantity: (Int, Int) -> Unit,
-    onRecipeIngredientDelete: (Int) -> Unit
+    onRecipeIngredientDelete: (Int) -> Unit,
+    saveRecipe: () -> Unit,
+    navigateUp: () -> Unit
 ) {
     var showAllIngredientsDialog by rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -163,7 +168,10 @@ fun Content(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 ),
-                onClick = {}
+                onClick = {
+                    saveRecipe()
+                    navigateUp()
+                }
             ) {
                 Text(
                     text = "Save",
