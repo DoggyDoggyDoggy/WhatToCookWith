@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.domain.model.Recipe
 
 @Composable
@@ -31,7 +33,9 @@ fun RecipeCard(
             modifier = Modifier.padding(8.dp)
         ) {
             Text(
-                text = recipe.name
+                text = recipe.name,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp
             )
 
             Spacer(modifier = Modifier.height(2.dp))
