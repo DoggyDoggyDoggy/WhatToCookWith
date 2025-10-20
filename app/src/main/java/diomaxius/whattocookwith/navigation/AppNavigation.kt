@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import diomaxius.whattocookwith.ui.screen.addrecipe.AddRecipeScreen
+import diomaxius.whattocookwith.ui.screen.allrecipes.AllRecipesScreen
 import diomaxius.whattocookwith.ui.screen.ingredients.IngredientsScreen
 import diomaxius.whattocookwith.ui.screen.home.HomeScreen
 import diomaxius.whattocookwith.ui.screen.pantry.PantryScreen
@@ -36,6 +37,9 @@ fun AppNavigation(
             }
             composable(NavScreen.AddRecipe.route) {
                 AddRecipeScreen()
+            }
+            composable(NavScreen.AllRecipes.route) {
+                AllRecipesScreen()
             }
         }
     }
