@@ -63,7 +63,7 @@ fun Content(
             RecipeCard(
                 recipe = recipe,
                 onClick = {
-                    navHostController.navigate(NavScreen.Recipe.route) {
+                    navHostController.navigate(NavScreen.Recipe.createRoute(recipe.id)) {
                         launchSingleTop = true
                     }
                 }
