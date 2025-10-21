@@ -5,6 +5,7 @@ import diomaxius.whattocookwith.data.mapper.ingredient.toDomain
 import diomaxius.whattocookwith.data.mapper.ingredient.toEntity
 import diomaxius.whattocookwith.domain.repository.IngredientRepository
 import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.domain.model.RecipeIngredient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -33,4 +34,10 @@ class IngredientRepositoryImpl @Inject constructor(
 
     override suspend fun editIngredient(oldIngredient: Ingredient, newIngredient: Ingredient) =
         ingredientDao.editIngredient(oldIngredient.toEntity(), newIngredient.toEntity())
+
+    override suspend fun consumeIngredients(ingredients: List<RecipeIngredient>) {
+        ingredients.forEach {
+            ingredientDao.decreaseQuantity(it.ingredientName, it.requiredQuantity)
+        }
+    }
 }

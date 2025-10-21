@@ -50,7 +50,8 @@ fun RecipeScreen(
         Content(
             modifier = Modifier.padding(innerPadding),
             recipe = recipe,
-            isRecipeMakeable = isRecipeMakeable
+            isRecipeMakeable = isRecipeMakeable,
+            startCooking = viewModel::startCooking
         )
     }
 }
@@ -60,6 +61,7 @@ fun Content(
     modifier: Modifier = Modifier,
     recipe: Recipe,
     isRecipeMakeable: Boolean,
+    startCooking: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -105,7 +107,7 @@ fun Content(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
             enabled = isRecipeMakeable,
-            onClick = { }
+            onClick = startCooking
         ) {
             Text(
                 text = "Start cooking",

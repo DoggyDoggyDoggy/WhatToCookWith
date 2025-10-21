@@ -1,6 +1,7 @@
 package diomaxius.whattocookwith.domain.repository
 
 import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.domain.model.RecipeIngredient
 import kotlinx.coroutines.flow.Flow
 
 interface IngredientRepository {
@@ -10,4 +11,5 @@ interface IngredientRepository {
     suspend fun deleteIngredient(ingredient: Ingredient)
     suspend fun editIngredient(ingredient: Ingredient)
     suspend fun editIngredient(oldIngredient: Ingredient, newIngredient: Ingredient)
+    suspend fun consumeIngredients(ingredients: List<RecipeIngredient>)
 }

@@ -32,4 +32,8 @@ interface IngredientDao {
         deleteById(oldIngredient)
         insertIngredient(newIngredient)
     }
+
+    //Not save. Check if enough ingredients before call it
+    @Query("UPDATE IngredientEntity SET quantity = quantity - :amount WHERE name = :name")
+    suspend fun decreaseQuantity(name: String, amount: Int)
 }
