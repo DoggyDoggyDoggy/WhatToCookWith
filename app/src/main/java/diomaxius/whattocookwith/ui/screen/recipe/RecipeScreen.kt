@@ -9,19 +9,28 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -29,6 +38,7 @@ import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun RecipeScreen(
@@ -39,7 +49,20 @@ fun RecipeScreen(
 
     val navHostController = LocalNavController.current
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    shape = RoundedCornerShape(32.dp),
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+        },
         topBar = {
             TopBar(
                 text = recipe.name,
@@ -51,7 +74,12 @@ fun RecipeScreen(
             modifier = Modifier.padding(innerPadding),
             recipe = recipe,
             isRecipeMakeable = isRecipeMakeable,
-            startCooking = viewModel::startCooking
+            startCooking = viewModel::startCooking,
+            showSnackbar = { message ->
+                scope.launch {
+                    snackbarHostState.showSnackbar(message)
+                }
+            }
         )
     }
 }
@@ -61,8 +89,12 @@ fun Content(
     modifier: Modifier = Modifier,
     recipe: Recipe,
     isRecipeMakeable: Boolean,
-    startCooking: () -> Unit
+    startCooking: () -> Unit,
+    showSnackbar: (String) -> Unit,
 ) {
+    var isCooking by remember {
+        mutableStateOf(false)
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -98,22 +130,57 @@ fun Content(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            modifier = Modifier
-                .width(320.dp)
-                .height(52.dp)
-                .align(Alignment.CenterHorizontally),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            ),
-            enabled = isRecipeMakeable,
-            onClick = startCooking
-        ) {
-            Text(
-                text = "Start cooking",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp
+        if(!isCooking){
+            Button(
+                modifier = Modifier
+                    .width(320.dp)
+                    .height(52.dp)
+                    .align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                enabled = isRecipeMakeable,
+                onClick = {
+                    startCooking()
+                    showSnackbar("Ingredients have been subtracted from your pantry")
+                    isCooking = true
+                }
+            ) {
+                Text(
+                    text = "Start cooking",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp
+                )
+            }
+        } else {
+            CookingCard(
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 12.dp)
             )
         }
+    }
+}
+
+@Composable
+fun CookingCard(
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .width(220.dp)
+            .height(48.dp),
+        shape = RoundedCornerShape(64.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        )
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            text = "Enjoy your meal!",
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 20.sp
+        )
     }
 }
