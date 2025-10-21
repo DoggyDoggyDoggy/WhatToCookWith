@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.components.navigationdrawer
+package diomaxius.whattocookwith.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

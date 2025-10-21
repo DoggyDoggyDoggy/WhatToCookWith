@@ -15,7 +15,7 @@ import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.navigation.NavScreen
 import diomaxius.whattocookwith.ui.components.MenuButton
 import diomaxius.whattocookwith.ui.components.TopBar
-import diomaxius.whattocookwith.ui.components.navigationdrawer.NavigationDrawer
+import diomaxius.whattocookwith.ui.components.NavigationDrawer
 import kotlinx.coroutines.launch
 
 @Composable
