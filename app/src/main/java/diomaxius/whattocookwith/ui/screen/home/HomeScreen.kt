@@ -59,16 +59,12 @@ fun Content(
     Column(
         modifier = modifier
     ) {
-        Button(
-            onClick = {
-                navHostController.navigate(NavScreen.Ingredients.route) {
-                    launchSingleTop = true
-                }
-            }
-        ) {
-            Text("Go to ingredients")
-        }
-        Button(
+
+    }
+}
+
+/*
+Button(
             onClick = {
                 navHostController.navigate(NavScreen.Pantry.route) {
                     launchSingleTop = true
@@ -79,15 +75,6 @@ fun Content(
         }
         Button(
             onClick = {
-                navHostController.navigate(NavScreen.AddRecipe.route) {
-                    launchSingleTop = true
-                }
-            }
-        ) {
-            Text("Add recipe")
-        }
-        Button(
-            onClick = {
                 navHostController.navigate(NavScreen.AllRecipes.route) {
                     launchSingleTop = true
                 }
@@ -95,5 +82,4 @@ fun Content(
         ) {
             Text("All recipes")
         }
-    }
-}
+ */
