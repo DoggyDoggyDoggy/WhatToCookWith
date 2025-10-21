@@ -16,4 +16,7 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getAllRecipesWithIngredients(): List<Recipe> =
         recipeDao.getAllRecipesWithIngredients().map { it.toDomain() }
+
+    override suspend fun getRecipeWithIngredients(id: Long): Recipe =
+       recipeDao.getRecipeWithIngredients(id).toDomain()
 }

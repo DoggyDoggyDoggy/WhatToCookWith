@@ -2,6 +2,8 @@ package diomaxius.whattocookwith.ui.screen.recipe
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
@@ -9,5 +11,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 fun RecipeScreen(
     viewModel: RecipeScreenViewModel = hiltViewModel()
 ) {
-    Text("Recipe Screen")
+    val recipe by viewModel.recipe.collectAsState()
+
+    Text(recipe.name)
+
 }
