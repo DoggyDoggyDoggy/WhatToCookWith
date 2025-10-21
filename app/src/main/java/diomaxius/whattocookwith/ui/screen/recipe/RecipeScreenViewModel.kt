@@ -8,15 +8,21 @@ import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.domain.usecase.recipe.GetRecipeWithIngredientsUseCase
 import diomaxius.whattocookwith.domain.usecase.recipe.IsRecipeMakeableUseCase
 import diomaxius.whattocookwith.domain.usecase.recipe.StartCookingRecipeUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeScreenViewModel @Inject constructor(
     private val getRecipe: GetRecipeWithIngredientsUseCase,
-    private val isRecipeMakeableUseCase: IsRecipeMakeableUseCase,
+    isRecipeMakeableUseCase: IsRecipeMakeableUseCase,
     private val startCookingRecipeUseCase: StartCookingRecipeUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -32,20 +38,18 @@ class RecipeScreenViewModel @Inject constructor(
     )
     val recipe = _recipe.asStateFlow()
 
-    private val _isRecipeMakeable = MutableStateFlow(false)
-    val isRecipeMakeable = _isRecipeMakeable.asStateFlow()
+    val isRecipeMakeable: StateFlow<Boolean> =
+        isRecipeMakeableUseCase(recipeId.toLong())
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.IO)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     init {
         loadRecipe()
-        loadIsRecipeMakeable()
     }
 
     fun startCooking() = viewModelScope.launch {
         startCookingRecipeUseCase(_recipe.value.ingredients)
-    }
-
-    private fun loadIsRecipeMakeable() = viewModelScope.launch {
-        _isRecipeMakeable.value = isRecipeMakeableUseCase(recipeId.toLong())
     }
 
     private fun loadRecipe() = viewModelScope.launch {

@@ -10,6 +10,7 @@ import androidx.room.Update
 import diomaxius.whattocookwith.data.model.recipe.RecipeEntity
 import diomaxius.whattocookwith.data.model.recipe.RecipeIngredientEntity
 import diomaxius.whattocookwith.data.model.recipe.RecipeWithIngredients
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
@@ -86,5 +87,5 @@ interface RecipeDao {
         WHERE r.id = :recipeId
         """
     )
-    suspend fun isRecipeMakeable(recipeId: Long): Boolean
+    fun isRecipeMakeable(recipeId: Long): Flow<Boolean>
 }
