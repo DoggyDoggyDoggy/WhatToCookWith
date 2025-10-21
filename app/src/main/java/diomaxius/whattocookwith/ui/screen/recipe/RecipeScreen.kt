@@ -61,9 +61,11 @@ fun Content(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(12.dp),
+            .padding(horizontal = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        Spacer(modifier = Modifier)
+
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
