@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.domain.usecase.recipe.GetRecipeWithIngredientsUseCase
+import diomaxius.whattocookwith.domain.usecase.recipe.IsRecipeMakeableUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeScreenViewModel @Inject constructor(
     private val getRecipe: GetRecipeWithIngredientsUseCase,
+    private val isRecipeMakeableUseCase: IsRecipeMakeableUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val recipeId: String = checkNotNull(savedStateHandle["id"])
@@ -28,8 +30,16 @@ class RecipeScreenViewModel @Inject constructor(
     )
     val recipe = _recipe.asStateFlow()
 
+    private val _isRecipeMakeable = MutableStateFlow(false)
+    val isRecipeMakeable = _isRecipeMakeable.asStateFlow()
+
     init {
         loadRecipe()
+        loadIsRecipeMakeable()
+    }
+
+    private fun loadIsRecipeMakeable() = viewModelScope.launch {
+        _isRecipeMakeable.value = isRecipeMakeableUseCase(recipeId.toLong())
     }
 
     private fun loadRecipe() = viewModelScope.launch {

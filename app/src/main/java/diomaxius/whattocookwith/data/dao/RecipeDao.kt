@@ -69,4 +69,22 @@ interface RecipeDao {
         """
     )
     suspend fun getMakeableRecipesWithIngredients(): List<RecipeWithIngredients>
+
+    @Query(
+        """
+        SELECT CASE WHEN COALESCE(SUM(
+            CASE
+                WHEN ri.optional = 1 THEN 0
+                WHEN p.name IS NULL THEN 1
+                WHEN p.quantity < ri.requiredQuantity THEN 1
+                ELSE 0
+            END
+        ), 0) = 0 THEN 1 ELSE 0 END
+        FROM RecipeEntity r
+        LEFT JOIN RecipeIngredientEntity ri ON r.id = ri.recipeId
+        LEFT JOIN IngredientEntity p ON p.name = ri.ingredientName
+        WHERE r.id = :recipeId
+        """
+    )
+    suspend fun isRecipeMakeable(recipeId: Long): Boolean
 }

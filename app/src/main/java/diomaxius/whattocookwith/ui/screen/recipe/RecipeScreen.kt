@@ -35,6 +35,7 @@ fun RecipeScreen(
     viewModel: RecipeScreenViewModel = hiltViewModel(),
 ) {
     val recipe by viewModel.recipe.collectAsState()
+    val isRecipeMakeable by viewModel.isRecipeMakeable.collectAsState()
 
     val navHostController = LocalNavController.current
 
@@ -48,7 +49,8 @@ fun RecipeScreen(
     ) { innerPadding ->
         Content(
             modifier = Modifier.padding(innerPadding),
-            recipe = recipe
+            recipe = recipe,
+            isRecipeMakeable = isRecipeMakeable
         )
     }
 }
@@ -57,6 +59,7 @@ fun RecipeScreen(
 fun Content(
     modifier: Modifier = Modifier,
     recipe: Recipe,
+    isRecipeMakeable: Boolean,
 ) {
     Column(
         modifier = modifier
@@ -101,6 +104,7 @@ fun Content(
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
+            enabled = isRecipeMakeable,
             onClick = { }
         ) {
             Text(

@@ -19,4 +19,7 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getRecipeWithIngredients(id: Long): Recipe =
        recipeDao.getRecipeWithIngredients(id).toDomain()
+
+    override suspend fun isRecipeMakeable(recipeId: Long): Boolean =
+        recipeDao.isRecipeMakeable(recipeId)
 }
