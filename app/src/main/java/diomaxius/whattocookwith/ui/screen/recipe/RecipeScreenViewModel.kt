@@ -8,13 +8,11 @@ import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.domain.usecase.recipe.GetRecipeWithIngredientsUseCase
 import diomaxius.whattocookwith.domain.usecase.recipe.IsRecipeMakeableUseCase
 import diomaxius.whattocookwith.domain.usecase.recipe.StartCookingRecipeUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,8 +39,11 @@ class RecipeScreenViewModel @Inject constructor(
     val isRecipeMakeable: StateFlow<Boolean> =
         isRecipeMakeableUseCase(recipeId.toLong())
             .distinctUntilChanged()
-            .flowOn(Dispatchers.IO)
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = false
+            )
 
     init {
         loadRecipe()
