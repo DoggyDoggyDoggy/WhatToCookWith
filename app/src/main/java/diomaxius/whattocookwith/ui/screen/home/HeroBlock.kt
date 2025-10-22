@@ -38,7 +38,7 @@ fun HeroBlock() {
             )
 
             Text(
-                text = "Find recipe based on your ingredients in your pantry",
+                text = "Find recipes based on your ingredients in your pantry",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
