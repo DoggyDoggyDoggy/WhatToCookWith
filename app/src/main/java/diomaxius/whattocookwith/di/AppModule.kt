@@ -27,7 +27,7 @@ object AppModule {
         context,
         IngredientDatabase::class.java,
         IngredientDatabase.DATABASE_NAME
-    ).build()
+    )/*.createFromAsset("ingredients_db")*/.build()
 
     @Provides
     @Singleton
