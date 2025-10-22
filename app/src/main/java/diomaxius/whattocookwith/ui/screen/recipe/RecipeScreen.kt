@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.navigation.LocalNavController
+import diomaxius.whattocookwith.ui.components.CustomButton
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
 import diomaxius.whattocookwith.ui.components.TopBar
 import kotlinx.coroutines.launch
@@ -88,7 +87,7 @@ fun RecipeScreen(
 fun Content(
     modifier: Modifier = Modifier,
     recipe: Recipe,
-    isRecipeMakeable: Boolean,
+    isRecipeMakeable: Boolean, //It became unnecessary after refactoring. Keep for now just in case
     startCooking: () -> Unit,
     showSnackbar: (String) -> Unit,
 ) {
@@ -131,27 +130,15 @@ fun Content(
         Spacer(modifier = Modifier.weight(1f))
 
         if(!isCooking){
-            Button(
-                modifier = Modifier
-                    .width(320.dp)
-                    .height(52.dp)
-                    .align(Alignment.CenterHorizontally),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
-                enabled = isRecipeMakeable,
+            CustomButton(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 onClick = {
                     startCooking()
                     showSnackbar("Ingredients have been subtracted from your pantry")
                     isCooking = true
-                }
-            ) {
-                Text(
-                    text = "Start cooking",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp
-                )
-            }
+                },
+                text = "Start cooking"
+            )
         } else {
             CookingCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 12.dp)
