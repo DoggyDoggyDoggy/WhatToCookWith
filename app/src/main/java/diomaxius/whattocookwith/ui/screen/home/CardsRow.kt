@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,62 +22,60 @@ import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.R
 
 @Composable
-fun CardsRow(modifier: Modifier = Modifier) {
+fun CardsRow(
+    modifier: Modifier = Modifier
+) {
     Row (
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Card(
+        CustomCard(
             modifier = Modifier.weight(0.5f),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
-            )
-        ) {
-            Column(
-                modifier= Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ){
-                Text(
-                    modifier = Modifier.padding(8.dp),
-                    text = "My Pantry",
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+            cardColor = MaterialTheme.colorScheme.secondaryContainer,
+            text = "My pantry",
+            image = R.drawable.home_pantry
+        )
 
-                Image(
-                    painter = painterResource(id = R.drawable.home_pantry),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = ""
-                )
-            }
-        }
-
-        Card(
+        CustomCard(
             modifier = Modifier.weight(0.5f),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
-            )
-        ) {
-            Column(
-                modifier= Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    modifier = Modifier.padding(8.dp),
-                    text = "All recipes",
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+            cardColor = MaterialTheme.colorScheme.secondaryContainer,
+            text = "All recipes",
+            image = R.drawable.home_allrecipes
+        )
+    }
+}
 
-                Image(
-                    painter = painterResource(id = R.drawable.home_allrecipes),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = ""
-                )
-            }
+@Composable
+fun CustomCard(
+    modifier: Modifier,
+    cardColor: Color,
+    text: String,
+    image: Int
+) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(
+            containerColor = cardColor
+        )
+    ) {
+        Column(
+            modifier= Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                modifier = Modifier.padding(8.dp),
+                text = text,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Image(
+                painter = painterResource(image),
+                contentScale = ContentScale.Fit,
+                contentDescription = ""
+            )
         }
     }
 }
