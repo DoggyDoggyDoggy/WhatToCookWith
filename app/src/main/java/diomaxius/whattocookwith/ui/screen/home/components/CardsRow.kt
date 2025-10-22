@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.home
+package diomaxius.whattocookwith.ui.screen.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

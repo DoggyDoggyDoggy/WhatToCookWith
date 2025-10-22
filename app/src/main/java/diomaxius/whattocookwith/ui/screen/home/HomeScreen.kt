@@ -20,6 +20,8 @@ import diomaxius.whattocookwith.ui.components.CustomButton
 import diomaxius.whattocookwith.ui.components.MenuButton
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.NavigationDrawer
+import diomaxius.whattocookwith.ui.screen.home.components.CardsRow
+import diomaxius.whattocookwith.ui.screen.home.components.HeroBlock
 import kotlinx.coroutines.launch
 
 @Composable
