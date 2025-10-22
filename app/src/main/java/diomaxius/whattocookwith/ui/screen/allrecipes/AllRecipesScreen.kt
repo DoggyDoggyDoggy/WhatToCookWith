@@ -18,6 +18,7 @@ import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.navigation.LocalNavController
 import diomaxius.whattocookwith.navigation.NavScreen
 import diomaxius.whattocookwith.ui.components.PopBackArrowButton
+import diomaxius.whattocookwith.ui.components.RecipeCard
 import diomaxius.whattocookwith.ui.components.TopBar
 
 @Composable

@@ -1,4 +1,4 @@
-package diomaxius.whattocookwith.ui.screen.allrecipes
+package diomaxius.whattocookwith.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
