@@ -125,7 +125,7 @@ fun DrawerContent(
                     unselectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                 ),
                 onClick = {
-                    navHostController.navigate(NavScreen.AllRecipes.route) {
+                    navHostController.navigate(NavScreen.AddRecipe.route) {
                         launchSingleTop = true
                     }
                 }
