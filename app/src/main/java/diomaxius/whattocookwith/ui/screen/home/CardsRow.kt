@@ -1,6 +1,7 @@
 package diomaxius.whattocookwith.ui.screen.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,22 +24,28 @@ import diomaxius.whattocookwith.R
 
 @Composable
 fun CardsRow(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFirstCardClick: () -> Unit,
+    onSecondCardClick: () -> Unit,
 ) {
-    Row (
+    Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         CustomCard(
-            modifier = Modifier.weight(0.5f),
+            modifier = Modifier
+                .weight(0.5f)
+                .clickable { onFirstCardClick() },
             cardColor = MaterialTheme.colorScheme.secondaryContainer,
             text = "My pantry",
             image = R.drawable.home_pantry
         )
 
         CustomCard(
-            modifier = Modifier.weight(0.5f),
+            modifier = Modifier
+                .weight(0.5f)
+                .clickable { onSecondCardClick() },
             cardColor = MaterialTheme.colorScheme.secondaryContainer,
             text = "All recipes",
             image = R.drawable.home_allrecipes
@@ -51,7 +58,7 @@ fun CustomCard(
     modifier: Modifier,
     cardColor: Color,
     text: String,
-    image: Int
+    image: Int,
 ) {
     Card(
         modifier = modifier,
@@ -60,7 +67,7 @@ fun CustomCard(
         )
     ) {
         Column(
-            modifier= Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

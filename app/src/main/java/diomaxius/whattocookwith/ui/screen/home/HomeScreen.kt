@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import diomaxius.whattocookwith.navigation.LocalNavController
+import diomaxius.whattocookwith.navigation.NavScreen
 import diomaxius.whattocookwith.ui.components.MenuButton
 import diomaxius.whattocookwith.ui.components.TopBar
 import diomaxius.whattocookwith.ui.components.NavigationDrawer
@@ -69,6 +70,17 @@ fun Content(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        CardsRow()
+        CardsRow(
+            onFirstCardClick = {
+                navHostController.navigate(NavScreen.Pantry.route) {
+                    launchSingleTop = true
+                }
+            },
+            onSecondCardClick = {
+                navHostController.navigate(NavScreen.AddRecipe.route) {
+                    launchSingleTop = true
+                }
+            }
+        )
     }
 }
