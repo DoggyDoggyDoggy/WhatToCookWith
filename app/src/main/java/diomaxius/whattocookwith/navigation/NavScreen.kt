@@ -9,4 +9,5 @@ sealed class NavScreen (val route: String) {
     object Recipe: NavScreen("recipe/{id}") {
         fun createRoute(id: Long) = "recipe/$id"
     }
+    object AvailableToCookRecipes: NavScreen("availabletocookrecipes")
 }

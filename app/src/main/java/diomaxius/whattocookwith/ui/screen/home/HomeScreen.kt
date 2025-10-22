@@ -90,7 +90,11 @@ fun Content(
 
         CustomButton(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = {},
+            onClick = {
+                navHostController.navigate(NavScreen.AvailableToCookRecipes.route) {
+                    launchSingleTop = true
+                }
+            },
             text = "Find recipes"
         )
     }
