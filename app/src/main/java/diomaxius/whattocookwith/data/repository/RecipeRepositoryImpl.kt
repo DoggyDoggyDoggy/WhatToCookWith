@@ -6,6 +6,7 @@ import diomaxius.whattocookwith.data.mapper.recipe.toEntity
 import diomaxius.whattocookwith.domain.model.Recipe
 import diomaxius.whattocookwith.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
@@ -23,4 +24,7 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override fun isRecipeMakeable(recipeId: Long): Flow<Boolean> =
         recipeDao.isRecipeMakeable(recipeId)
+
+    override fun getMakeableRecipesWithIngredients(): Flow<List<Recipe>> =
+        recipeDao.getMakeableRecipesWithIngredients().map { it.map { recipe -> recipe.toDomain() } }
 }

@@ -8,4 +8,5 @@ interface RecipeRepository {
     suspend fun getAllRecipesWithIngredients(): List<Recipe>
     suspend fun getRecipeWithIngredients(id: Long) : Recipe
     fun isRecipeMakeable(recipeId: Long): Flow<Boolean>
+    fun getMakeableRecipesWithIngredients(): Flow<List<Recipe>>
 }

@@ -69,7 +69,7 @@ interface RecipeDao {
         ) = 0
         """
     )
-    suspend fun getMakeableRecipesWithIngredients(): List<RecipeWithIngredients>
+    fun getMakeableRecipesWithIngredients(): Flow<List<RecipeWithIngredients>>
 
     @Query(
         """
