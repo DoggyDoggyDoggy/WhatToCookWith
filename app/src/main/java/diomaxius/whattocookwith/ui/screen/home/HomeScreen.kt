@@ -84,7 +84,7 @@ fun Content(
                 }
             },
             onSecondCardClick = {
-                navHostController.navigate(NavScreen.AddRecipe.route) {
+                navHostController.navigate(NavScreen.AllRecipes.route) {
                     launchSingleTop = true
                 }
             }
