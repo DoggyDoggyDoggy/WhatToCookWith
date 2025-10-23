@@ -87,7 +87,7 @@ fun RecipeScreen(
 fun Content(
     modifier: Modifier = Modifier,
     recipe: Recipe,
-    isRecipeMakeable: Boolean, //It became unnecessary after refactoring. Keep for now just in case
+    isRecipeMakeable: Boolean,
     startCooking: () -> Unit,
     showSnackbar: (String) -> Unit,
 ) {
@@ -137,6 +137,7 @@ fun Content(
                     showSnackbar("Ingredients have been subtracted from your pantry")
                     isCooking = true
                 },
+                enabled = isRecipeMakeable,
                 text = "Start cooking"
             )
         } else {

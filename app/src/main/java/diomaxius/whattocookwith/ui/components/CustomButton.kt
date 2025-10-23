@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.sp
 fun CustomButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    text: String
+    text: String,
+    enabled: Boolean = true
 ) {
     Button(
         modifier = modifier
@@ -27,6 +28,7 @@ fun CustomButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
+        enabled = enabled,
         onClick = onClick
     ) {
         Text(
