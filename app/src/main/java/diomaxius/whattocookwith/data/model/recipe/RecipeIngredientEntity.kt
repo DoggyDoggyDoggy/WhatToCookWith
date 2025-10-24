@@ -17,7 +17,7 @@ import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
         ),
         ForeignKey(
             IngredientEntity::class,
-            parentColumns = ["name"],
+            parentColumns = ["name"], //switch to id later
             childColumns = ["ingredientName"]
         )
     ],
@@ -28,5 +28,5 @@ data class RecipeIngredientEntity(
     val ingredientName: String,
     val requiredQuantity: Int,
     val unit: String,
-    val optional: Boolean = false,
+    val optional: Boolean = false, //optional is not use at the moment. No space in UI
 )

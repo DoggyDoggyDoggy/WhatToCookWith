@@ -5,5 +5,5 @@ data class RecipeIngredient(
     val ingredientName: String,
     val requiredQuantity: Int,
     val unit: String,
-    val optional: Boolean
+    val optional: Boolean // optional is not use at the moment. No space in UI
 )

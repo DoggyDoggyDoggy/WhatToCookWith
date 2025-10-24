@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
+//Custom search bar. I only later learned that there was already a ready-made API for a search bar.
 @Composable
 fun SearchOutlinedTextField(
     modifier: Modifier = Modifier,

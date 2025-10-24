@@ -14,7 +14,11 @@ import diomaxius.whattocookwith.ui.screen.ingredients.IngredientsScreen
 import diomaxius.whattocookwith.ui.screen.home.HomeScreen
 import diomaxius.whattocookwith.ui.screen.pantry.PantryScreen
 import diomaxius.whattocookwith.ui.screen.recipe.RecipeScreen
-
+/*
+I use CompositionLocalProvider to make
+it available throughout the composable tree,
+rather than manually pulling it down each time via parameter passing.
+*/
 val LocalNavController = compositionLocalOf<NavHostController> {
     error("NavController not initialized")
 }

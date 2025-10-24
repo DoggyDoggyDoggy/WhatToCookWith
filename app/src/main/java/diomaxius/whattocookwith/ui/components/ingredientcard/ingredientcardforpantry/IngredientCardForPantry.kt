@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
-
+//It's worth moving IngredientCardForPantry out of this package and into the corresponding screen.
+//As I was developing it, I didn't know if it would be used in just one screen or not.
 @Composable
 fun IngredientCardForPantry(
     ingredient: Ingredient,

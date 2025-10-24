@@ -3,7 +3,10 @@ package diomaxius.whattocookwith.domain.usecase.ingredient
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.domain.repository.IngredientRepository
 import javax.inject.Inject
-
+/*
+In the future, it would be better to create several presets for step
+and make it a separate class than to use a variable in UseCase.
+*/
 class DecreaseIngredientQuantityUseCase @Inject constructor(
     private val ingredientRepository: IngredientRepository,
 ) {

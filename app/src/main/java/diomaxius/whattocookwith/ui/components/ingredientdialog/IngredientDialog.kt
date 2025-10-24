@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
 
+//Simple wrappers to allow reuse of Ingredients Dialog.
 @Composable
 fun CreateIngredientDialog(
     dialogTitle: String,

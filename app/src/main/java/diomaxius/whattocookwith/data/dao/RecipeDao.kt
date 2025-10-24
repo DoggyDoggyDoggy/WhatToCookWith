@@ -11,6 +11,7 @@ import diomaxius.whattocookwith.data.model.recipe.RecipeEntity
 import diomaxius.whattocookwith.data.model.recipe.RecipeIngredientEntity
 import diomaxius.whattocookwith.data.model.recipe.RecipeWithIngredients
 import kotlinx.coroutines.flow.Flow
+//I've created functions for the DAO. But not all of them are actually used in the app yet.
 
 @Dao
 interface RecipeDao {
@@ -51,7 +52,11 @@ interface RecipeDao {
         val prepared = items.map { it.copy(recipeId = recipe.id) }
         insertRecipeIngredients(prepared)
     }
-
+    /*
+     Joining tables to find all the ingredients a user has to check if they can make a recipe.
+     This implementation isn't optimal, but it's easy to understand and replace with entity
+     classes as development progresses.
+     */
     @Transaction
     @Query(
         """
@@ -71,6 +76,7 @@ interface RecipeDao {
     )
     fun getMakeableRecipesWithIngredients(): Flow<List<RecipeWithIngredients>>
 
+    //Same idea, but if the recipe doesn't require ingredients, this query will still return them.
     @Query(
         """
         SELECT CASE WHEN COALESCE(SUM(

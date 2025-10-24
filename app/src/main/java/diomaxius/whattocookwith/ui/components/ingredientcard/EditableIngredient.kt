@@ -21,7 +21,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import diomaxius.whattocookwith.domain.model.Ingredient
 import diomaxius.whattocookwith.ui.components.ingredientdialog.EditIngredientDialog
+/*
+You can safely delete an ingredient from the list of ingredients,
+but if this ingredient is on the user's Panrty list,
+a confirmation window will be displayed to confirm the deletion.
+*/
 
+//There is currently a bug that will crash the application if this ingredient is used in any recipe.
+
+//It's worth moving EditableIngredient out of this package and into the corresponding screen.
+//As I was developing it, I didn't know if it would be used in just one screen or not.
 @Composable
 fun EditableIngredient(
     ingredient: Ingredient,

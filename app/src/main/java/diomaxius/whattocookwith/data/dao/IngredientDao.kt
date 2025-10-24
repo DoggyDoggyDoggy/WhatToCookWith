@@ -10,6 +10,15 @@ import androidx.room.Update
 import diomaxius.whattocookwith.data.model.ingredient.IngredientEntity
 import kotlinx.coroutines.flow.Flow
 
+/*
+I use name as the Primary Key. Therefore, I overloaded the editIngredient function so
+that I can change the ingredient name.
+
+I also just discovered a bug/error. I can't edit an ingredient if it's used in the recipe table.
+The app crashes.
+
+So I'll probably switch to a regular id:Int/Long as the Primary Key.
+*/
 @Dao
 interface IngredientDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

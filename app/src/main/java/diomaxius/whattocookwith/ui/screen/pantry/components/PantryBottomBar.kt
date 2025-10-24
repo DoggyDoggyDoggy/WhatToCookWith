@@ -17,7 +17,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import diomaxius.whattocookwith.ui.screen.pantry.ScreenState
+/*
+I don't know if it was worth it to create a custom Bottom Bar.
+I looked at the Material 3 guidelines and they recommend using a Bottom Bar only for 3 or more buttons.
+Otherwise, use a SecondaryTabRow.
+*/
 
+//Spent a lot of time getting the animation and behavior I wanted
 @Composable
 fun PantryBottomBar(
     state: ScreenState,
