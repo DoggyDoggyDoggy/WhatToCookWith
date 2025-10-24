@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import diomaxius.whattocookwith.domain.model.Ingredient
+import diomaxius.whattocookwith.domain.model.RecipeIngredient
 import diomaxius.whattocookwith.ui.components.SearchOutlinedTextField
 import diomaxius.whattocookwith.ui.components.ingredientcard.IngredientCard
 
@@ -36,6 +38,7 @@ fun AllIngredientDialog(
     addRecipeIngredient: (Ingredient) -> Unit,
     query: String,
     setQuery: (String) -> Unit,
+    recipeIngredients: List<RecipeIngredient>
 ) {
     AlertDialog(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -80,19 +83,34 @@ fun AllIngredientDialog(
                     IngredientCard(
                         ingredient = ingredient,
                         actions = {
-                            IconButton(
-                                colors = IconButtonDefaults.iconButtonColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                                ),
-                                onClick = {
-                                    addRecipeIngredient(ingredient)
+                            if (ingredient.name !in recipeIngredients.map { it.ingredientName }){
+                                IconButton(
+                                    colors = IconButtonDefaults.iconButtonColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceContainer
+                                    ),
+                                    onClick = {
+                                        addRecipeIngredient(ingredient)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Add,
+                                        contentDescription = "Add ingredient",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = "Add ingredient",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
+                            } else {
+                                IconButton(
+                                    colors = IconButtonDefaults.iconButtonColors(
+                                        containerColor = MaterialTheme.colorScheme.tertiary
+                                    ),
+                                    onClick = {}
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = "Checked ingredient",
+                                        tint = MaterialTheme.colorScheme.onTertiary
+                                    )
+                                }
                             }
                         }
                     )

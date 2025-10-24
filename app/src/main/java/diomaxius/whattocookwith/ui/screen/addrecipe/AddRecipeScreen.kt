@@ -166,7 +166,8 @@ fun Content(
                 query = query,
                 setQuery = setQuery,
                 focusManager = focusManager,
-                addRecipeIngredient = addRecipeIngredient
+                addRecipeIngredient = addRecipeIngredient,
+                recipeIngredients = recipeIngredients
             )
         }
     }
